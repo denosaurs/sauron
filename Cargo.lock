@@ -170,7 +170,7 @@ dependencies = [
 [[package]]
 name = "dlint"
 version = "0.1.0"
-source = "git+https://github.com/denoland/deno_lint.git#dfea7bad66dc882acbff18ca954d81def3cd9d3d"
+source = "git+https://github.com/denosaurs/deno_lint#b89850276e3607a1f0a1e28c62241481611c2a17"
 dependencies = [
  "regex",
  "serde",
