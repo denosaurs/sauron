@@ -9,3 +9,4 @@ edition = "2018"
 publish = false
 
 [dependencies]
+dlint = { git = "https://github.com/denoland/deno_lint.git" }
