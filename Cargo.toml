@@ -9,4 +9,8 @@ edition = "2018"
 publish = false
 
 [dependencies]
-dlint = { git = "https://github.com/denosaurs/deno_lint" }
+deno_lint = { version = "0.1.2", git = "https://github.com/denoland/deno_lint" }
+serde = "1.0.111"
+termcolor = "1.1.0"
+walkdir = "2.3.1"
+regex = "1.3.9"
