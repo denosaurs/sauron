@@ -3,8 +3,9 @@ use std::ffi::OsStr;
 
 use regex::Regex;
 
-use super::StructureDiagnostic;
-use super::StructureRule;
+use crate::structure::diagnostic::DiagnosticLevel;
+use crate::structure::diagnostic::StructureDiagnostic;
+use crate::structure::rules::StructureRule;
 
 pub struct SnakeCase;
 
@@ -25,6 +26,7 @@ impl StructureRule for SnakeCase {
 
       if !re.is_match(file_name) {
         return Some(StructureDiagnostic {
+          level: DiagnosticLevel::Recommended,
           path: path.to_str().unwrap().to_string(),
           code: "SnakeCase".to_string(),
           message: "All source files must use snake case".to_string()
