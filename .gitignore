@@ -3,3 +3,6 @@
 
 # rust build
 /target
+
+# repos
+/repos

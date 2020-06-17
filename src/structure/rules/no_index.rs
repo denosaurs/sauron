@@ -1,36 +1,43 @@
-use std::path::Path;
 use std::ffi::OsStr;
+use std::path::PathBuf;
 
-use crate::structure::diagnostic::DiagnosticLevel;
-use crate::structure::diagnostic::StructureDiagnostic;
+use crate::check::Check;
+use crate::context::Context;
+use crate::diagnostic::DiagnosticLevel;
 use crate::structure::rules::StructureRule;
 
 pub struct NoIndex;
 
-impl StructureRule for NoIndex {
-  fn new() -> Box<Self> {
-    Box::new(NoIndex)
-  }
-
-  fn check_file(&self, path: &Path, root: bool) -> Option<StructureDiagnostic> {
+impl Check for NoIndex {
+  fn check_file(&self, ctx: Context, path: &PathBuf, root: bool) {
     if !root {
-      return None
+      return;
     }
 
     match path.file_name().and_then(OsStr::to_str) {
-      Some("index.js") => Some(StructureDiagnostic {
-        level: DiagnosticLevel::Recommended,
-        path: path.to_str().unwrap().to_string(),
-        code: "NoIndex".to_string(),
-        message: "No index.js file allowed in root directory".to_string()
-      }),
-      Some("index.ts") => Some(StructureDiagnostic {
-        level: DiagnosticLevel::Recommended,
-        path: path.to_str().unwrap().to_string(),
-        code: "NoIndex".to_string(),
-        message: "No index.ts file allowed in root directory".to_string()
-      }),
-      _ => None
+      Some("index.js") => {
+        ctx.add(
+          DiagnosticLevel::Recommended,
+          path,
+          "NoIndex",
+          "No index.js file allowed in root directory",
+        );
+      }
+      Some("index.ts") => {
+        ctx.add(
+          DiagnosticLevel::Recommended,
+          path,
+          "NoIndex",
+          "No index.ts file allowed in root directory",
+        );
+      }
+      _ => {}
     }
+  }
+}
+
+impl StructureRule for NoIndex {
+  fn new() -> Box<Self> {
+    Box::new(NoIndex)
   }
 }

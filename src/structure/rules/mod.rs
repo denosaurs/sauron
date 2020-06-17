@@ -1,20 +1,25 @@
-use std::path::Path;
+use crate::check::Check;
 
-use crate::structure::diagnostic::StructureDiagnostic;
-
-mod snake_case;
+mod has_deps;
+mod has_license;
+mod has_mod;
+mod has_readme;
 mod no_index;
+mod snake_case;
 
-pub trait StructureRule {
+pub trait StructureRule: Check {
   fn new() -> Box<Self>
   where
     Self: Sized;
-  fn check_file(&self, path: &Path, root: bool) -> Option<StructureDiagnostic>;
 }
 
 pub fn get_all_rules() -> Vec<Box<dyn StructureRule>> {
   vec![
-    snake_case::SnakeCase::new(), 
+    has_deps::HasDeps::new(),
+    has_license::HasLicense::new(),
+    has_mod::HasMod::new(),
+    has_readme::HasReadme::new(),
+    snake_case::SnakeCase::new(),
     no_index::NoIndex::new()
   ]
 }
