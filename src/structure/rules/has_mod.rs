@@ -22,9 +22,11 @@ impl Check for HasMod {
     if !ctx.get_flag("has_mod") {
       ctx.add(
         DiagnosticLevel::Recommended,
-        root_dir,
         "HasMod",
         "The module should have a mod.ts file in the root directory",
+        root_dir,
+        None,
+        None,
       );
     }
   }

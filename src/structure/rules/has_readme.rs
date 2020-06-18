@@ -22,9 +22,11 @@ impl Check for HasReadme {
     if !ctx.get_flag("has_readme") {
       ctx.add(
         DiagnosticLevel::Recommended,
-        root_dir,
         "HasReadme",
         "The module should have a README.md file in the root directory",
+        root_dir,
+        None,
+        None,
       );
     }
   }
@@ -35,4 +37,3 @@ impl StructureRule for HasReadme {
     Box::new(HasReadme)
   }
 }
-

@@ -18,17 +18,21 @@ impl Check for NoIndex {
       Some("index.js") => {
         ctx.add(
           DiagnosticLevel::Recommended,
-          path,
           "NoIndex",
           "No index.js file allowed in root directory",
+          path,
+          None,
+          None,
         );
       }
       Some("index.ts") => {
         ctx.add(
           DiagnosticLevel::Recommended,
-          path,
           "NoIndex",
           "No index.ts file allowed in root directory",
+          path,
+          None,
+          None,
         );
       }
       _ => {}

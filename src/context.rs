@@ -1,6 +1,6 @@
 use std::sync::{Arc, Mutex};
 
-use crate::diagnostic::{Diagnostic, DiagnosticLevel};
+use crate::diagnostic::{Diagnostic, DiagnosticLevel, Location};
 use std::collections::HashMap;
 use std::path::PathBuf;
 
@@ -15,13 +15,19 @@ impl Context {
   pub fn add(
     &self,
     level: DiagnosticLevel,
-    path: &PathBuf,
     code: &str,
     message: &str,
+    path: &PathBuf,
+    line: Option<usize>,
+    col: Option<usize>,
   ) {
     let diagnostic = Diagnostic {
       level,
-      path: path.to_owned(),
+      location: Location {
+        path: path.to_owned(),
+        line,
+        col,
+      },
       scope: self.scope.clone(),
       code: code.to_string(),
       message: message.to_string(),

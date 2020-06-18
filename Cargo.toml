@@ -1,15 +1,15 @@
 [package]
 name = "nessie"
-description = "A code scoring tool for deno"
+description = "Module linting tool for Deno"
 repository = "https://github.com/denosaurs/nessie"
 license = "MIT"
 version = "0.1.0"
-authors = ["Elias Sjögreen", "Filippo Rossi"]
+authors = ["Filippo Rossi", "Elias Sjögreen"]
 edition = "2018"
-publish = false
 
 [dependencies]
 deno_lint = { version = "0.1.10", git = "https://github.com/denoland/deno_lint" }
+clap = "2.33.1"
 serde = "1.0.111"
 termcolor = "1.1.0"
 walkdir = "2.3.1"

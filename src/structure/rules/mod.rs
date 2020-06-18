@@ -20,6 +20,6 @@ pub fn get_all_rules() -> Vec<Box<dyn StructureRule>> {
     has_mod::HasMod::new(),
     has_readme::HasReadme::new(),
     snake_case::SnakeCase::new(),
-    no_index::NoIndex::new()
+    no_index::NoIndex::new(),
   ]
 }

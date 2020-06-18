@@ -22,9 +22,11 @@ impl Check for HasDeps {
     if !ctx.get_flag("has_deps") {
       ctx.add(
         DiagnosticLevel::Recommended,
-        root_dir,
         "HasDeps",
         "The module should have a deps.ts file in the root directory",
+        root_dir,
+        None,
+        None
       );
     }
   }

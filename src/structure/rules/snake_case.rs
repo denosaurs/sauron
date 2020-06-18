@@ -24,9 +24,11 @@ impl Check for SnakeCase {
       if !re.is_match(file_name) {
         ctx.add(
           DiagnosticLevel::Recommended,
-          path,
           "SnakeCase",
           "All source files must use snake case",
+          path,
+          None,
+          None,
         );
       }
     }
