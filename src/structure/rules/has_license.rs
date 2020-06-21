@@ -22,7 +22,7 @@ impl Check for HasLicense {
     if !ctx.get_flag("has_license") {
       ctx.add(
         DiagnosticLevel::Recommended,
-        "HasLicense",
+        "has-license",
         "The module should have a LICENSE file in the root directory",
         root_dir,
         None,

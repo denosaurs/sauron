@@ -1,6 +1,8 @@
 mod check;
+mod error;
 mod context;
 mod diagnostic;
+mod cp;
 
 mod linter;
 mod structure;
@@ -12,10 +14,12 @@ use std::process::exit;
 
 use clap::{Arg, app_from_crate, crate_name, crate_version, crate_description, crate_authors};
 use walkdir::WalkDir;
+use prettytable::{Table, format, row, cell};
 
 use crate::context::Context;
 
 use crate::check::Check;
+use crate::diagnostic::{Diagnostic, Colored};
 
 fn main() {
   #[cfg(windows)]
@@ -41,6 +45,7 @@ fn main() {
 
   let structure_rules = structure::rules::get_all_rules();
   let linter_rule = linter::Linter::default();
+  let cp_rule = cp::CopyPaste::default();
 
   let context = Context::default();
 
@@ -51,28 +56,43 @@ fn main() {
       let root = path.parent().unwrap() == root_dir.as_path();
 
       for structure_rule in &structure_rules {
-        structure_rule.check_file(context.scope("Structure"), &path, root);
+        structure_rule.check_file(context.scope("structure"), &path, root);
       }
 
-      linter_rule.check_file(context.scope("Lint"), &path, root);
+      linter_rule.check_file(context.scope("lint"), &path, root);
+      cp_rule.check_file(context.scope("copypaste"), &path, root)
     }
   }
 
   for structure_rule in &structure_rules {
-    structure_rule.check_context(context.scope("Structure"), &root_dir);
+    structure_rule.check_context(context.scope("structure"), &root_dir);
   }
+
+  cp_rule.check_context(context.scope("copypaste"), &root_dir);
 
   let diagnostics = context.diagnostics.lock().unwrap();
   if !diagnostics.is_empty() {
     for d in diagnostics.iter() {
       eprintln!();
-      eprintln!("{}", d.to_pretty_string());
+      eprintln!("{}", match d {
+        Diagnostic::Message(msg) => msg.colored()
+      });
     }
     eprintln!();
     eprintln!(
-      "{}: found {} problems.",
+      "{} - found {} problems:",
       colors::red_bold("results".to_string()),
       diagnostics.len()
     );
+    let mut results = Table::new();
+    results.set_format(*format::consts::FORMAT_CLEAN);
+    for scope in &["structure", "lint", "copypaste"] {
+      results.add_row(row![
+        Fyb->scope,
+        F->diagnostics.iter().filter(|d| match d {
+          Diagnostic::Message(msg) => msg.scope.eq(scope)
+        }).collect::<Vec<&Diagnostic>>().len()]);
+    }
+    results.print_tty(true);
   }
 }

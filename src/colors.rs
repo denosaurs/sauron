@@ -12,11 +12,11 @@ fn enable_ansi() {
   BufferWriter::stdout(ColorChoice::AlwaysAnsi);
 }
 
-pub fn bold(s: String) -> impl fmt::Display {
-  let mut style_spec = ColorSpec::new();
-  style_spec.set_bold(true);
-  style(&s, style_spec)
-}
+// pub fn bold(s: String) -> impl fmt::Display {
+//   let mut style_spec = ColorSpec::new();
+//   style_spec.set_bold(true);
+//   style(&s, style_spec)
+// }
 
 pub fn gray(s: String) -> impl fmt::Display {
   let mut style_spec = ColorSpec::new();
@@ -24,11 +24,11 @@ pub fn gray(s: String) -> impl fmt::Display {
   style(&s, style_spec)
 }
 
-pub fn red(s: String) -> impl fmt::Display {
-  let mut style_spec = ColorSpec::new();
-  style_spec.set_fg(Some(Red));
-  style(&s, style_spec)
-}
+// pub fn red(s: String) -> impl fmt::Display {
+//   let mut style_spec = ColorSpec::new();
+//   style_spec.set_fg(Some(Red));
+//   style(&s, style_spec)
+// }
 
 pub fn red_bold(s: String) -> impl fmt::Display {
   let mut style_spec = ColorSpec::new();

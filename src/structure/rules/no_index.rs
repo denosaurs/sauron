@@ -18,7 +18,7 @@ impl Check for NoIndex {
       Some("index.js") => {
         ctx.add(
           DiagnosticLevel::Recommended,
-          "NoIndex",
+          "no-index",
           "No index.js file allowed in root directory",
           path,
           None,

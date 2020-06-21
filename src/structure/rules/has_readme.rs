@@ -21,8 +21,8 @@ impl Check for HasReadme {
   fn check_context(&self, ctx: Context, root_dir: &PathBuf) {
     if !ctx.get_flag("has_readme") {
       ctx.add(
-        DiagnosticLevel::Recommended,
-        "HasReadme",
+        DiagnosticLevel::Required,
+        "has-readme",
         "The module should have a README.md file in the root directory",
         root_dir,
         None,

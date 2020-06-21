@@ -7,7 +7,6 @@ use deno_lint::swc_util::get_default_ts_config;
 
 use crate::check::Check;
 use crate::context::Context;
-use crate::diagnostic::Diagnostic;
 
 pub struct Linter;
 
@@ -37,7 +36,7 @@ impl Check for Linter {
 
     if !file_diagnostics.is_empty() {
       for d in file_diagnostics.iter() {
-        ctx.add_diagnostic(Diagnostic::from(d.clone()))
+        ctx.add_diagnostic(d.clone().into())
       }
     }
   }
