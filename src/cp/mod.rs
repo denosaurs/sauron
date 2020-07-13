@@ -15,7 +15,7 @@ use swc_ecma_parser::token::TokenAndSpan;
 
 use crate::check::Check;
 use crate::context::Context;
-use crate::error::NessieError;
+use crate::error::SauronError;
 use crate::cp::tok::Tok;
 use crate::cp::rabin_karp::RabinKarp;
 use crate::diagnostic::{DiagnosticLevel, Location};
@@ -72,14 +72,14 @@ impl Default for CopyPaste {
 }
 
 impl CopyPaste {
-  pub fn parse_file(&self, path: &Path) -> Result<Vec<TokenAndSpan>, NessieError> {
+  pub fn parse_file(&self, path: &Path) -> Result<Vec<TokenAndSpan>, SauronError> {
     match path.extension().and_then(OsStr::to_str) {
       Some("ts") => self.parse(path, get_default_ts_config()),
       _ => self.parse(path, get_default_es_config()),
     }
   }
 
-  pub fn parse(&self, path: &Path, syntax: Syntax) -> Result<Vec<TokenAndSpan>, NessieError> {
+  pub fn parse(&self, path: &Path, syntax: Syntax) -> Result<Vec<TokenAndSpan>, SauronError> {
     swc_common::GLOBALS.set(&swc_common::Globals::new(), || {
       let handler =
         Handler::with_tty_emitter(ColorConfig::Auto, true, false,
@@ -89,7 +89,7 @@ impl CopyPaste {
 
       let fm = self.source_map
         .load_file(path)
-        .map_err(|_e| NessieError)?;
+        .map_err(|_e| SauronError)?;
 
       let lexer = Lexer::new(
         session,

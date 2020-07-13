@@ -1,10 +1,10 @@
 use core::fmt;
 
 #[derive(Debug)]
-pub struct NessieError;
+pub struct SauronError;
 
-impl fmt::Display for NessieError {
+impl fmt::Display for SauronError {
   fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-    write!(f, "NessieError is here!")
+    write!(f, "SauronError is here!")
   }
 }

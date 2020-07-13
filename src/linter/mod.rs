@@ -1,9 +1,8 @@
 use std::ffi::OsStr;
 use std::path::PathBuf;
 
-use deno_lint::linter::Linter as DenoLinter;
-use deno_lint::rules::get_all_rules;
-use deno_lint::swc_util::get_default_ts_config;
+use deno_lint::linter::LinterBuilder;
+use deno_lint::rules::get_recommended_rules;
 
 use crate::check::Check;
 use crate::context::Context;
@@ -18,20 +17,15 @@ impl Check for Linter {
       _ => return,
     };
 
-    let mut linter = DenoLinter::default();
-    let rules = get_all_rules();
-    let syntax = get_default_ts_config();
+    let mut linter = LinterBuilder::default()
+      .rules(get_recommended_rules())
+      .build();
 
     let source_code =
       std::fs::read_to_string(path).expect("Failed to read file");
 
     let file_diagnostics = linter
-      .lint(
-        String::from(path.to_str().unwrap()),
-        source_code,
-        syntax,
-        rules,
-      )
+      .lint(String::from(path.to_str().unwrap()), source_code)
       .expect("Failed to lint");
 
     if !file_diagnostics.is_empty() {

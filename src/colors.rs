@@ -8,7 +8,7 @@ use termcolor::{BufferWriter, ColorChoice};
 
 #[allow(unused)]
 #[cfg(windows)]
-fn enable_ansi() {
+pub fn enable_ansi() {
   BufferWriter::stdout(ColorChoice::AlwaysAnsi);
 }
 
