@@ -19,7 +19,7 @@ impl Check for NoIndex {
         ctx.add(
           DiagnosticLevel::Recommended,
           "no-index",
-          "No index.js file allowed in root directory",
+          "No `index.js` file allowed in root directory",
           path,
           None,
           None,
@@ -29,7 +29,7 @@ impl Check for NoIndex {
         ctx.add(
           DiagnosticLevel::Recommended,
           "NoIndex",
-          "No index.ts file allowed in root directory",
+          "No `index.ts` file allowed in root directory",
           path,
           None,
           None,

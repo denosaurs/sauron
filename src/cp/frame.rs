@@ -1,5 +1,6 @@
-use crate::cp::tok::Tok;
 use std::ops::Range;
+
+use crate::cp::tok::Tok;
 
 type Fingerprint = usize;
 
@@ -16,14 +17,14 @@ pub struct FrameIterator {
   min_len: usize,
   hash_pow: usize,
   hash: usize,
-  position: usize
+  position: usize,
 }
 
 impl Iterator for FrameIterator {
   type Item = Frame;
   fn next(&mut self) -> Option<Self::Item> {
     if self.tokens.len() < self.min_len {
-      return None
+      return None;
     }
 
     if self.position <= self.tokens.len() - self.min_len {
@@ -42,8 +43,8 @@ impl Iterator for FrameIterator {
       return Some(Frame {
         hash: self.hash,
         start: slice[0].clone(),
-        end: slice[self.min_len - 1].clone()
-      })
+        end: slice[self.min_len - 1].clone(),
+      });
     }
     None
   }
@@ -60,14 +61,14 @@ impl FrameIterator {
       min_len,
       hash_pow,
       hash: 0,
-      position: 0
+      position: 0,
     }
   }
 
   fn range(&self) -> Range<usize> {
     Range {
       start: self.position - 1,
-      end: self.position + self.min_len - 1
+      end: self.position + self.min_len - 1,
     }
   }
 
@@ -79,8 +80,14 @@ impl FrameIterator {
     hash
   }
 
-  fn update_hash(&self, prev: Fingerprint, old: &Tok, new: &Tok) -> Fingerprint {
-    prev.wrapping_sub((old.hash as usize).wrapping_mul(self.hash_pow))
+  fn update_hash(
+    &self,
+    prev: Fingerprint,
+    old: &Tok,
+    new: &Tok,
+  ) -> Fingerprint {
+    prev
+      .wrapping_sub((old.hash as usize).wrapping_mul(self.hash_pow))
       .wrapping_shl(1)
       .wrapping_add(new.hash as usize)
   }

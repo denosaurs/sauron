@@ -23,7 +23,7 @@ impl Check for HasReadme {
       ctx.add(
         DiagnosticLevel::Required,
         "has-readme",
-        "The module should have a README.md file in the root directory",
+        "The module should have a `README.md` file in the root directory",
         root_dir,
         None,
         None,

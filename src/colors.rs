@@ -1,8 +1,8 @@
 use core::fmt;
 use std::io::Write;
+
 use termcolor::Color::{Ansi256, Blue, Red, Yellow};
 use termcolor::{Ansi, ColorSpec, WriteColor};
-
 #[cfg(windows)]
 use termcolor::{BufferWriter, ColorChoice};
 

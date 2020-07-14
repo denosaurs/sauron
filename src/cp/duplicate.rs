@@ -1,18 +1,20 @@
-use swc_common::SpanData;
 use std::path::PathBuf;
+
+use crate::swc_common::SpanData;
+
 use crate::cp::frame::Frame;
 
 #[derive(Clone, Debug)]
 pub struct Position {
   pub start: SpanData,
-  pub end: SpanData
+  pub end: SpanData,
 }
 
 impl From<&Frame> for Position {
   fn from(frame: &Frame) -> Self {
     Self {
       start: frame.start.span,
-      end: frame.end.span
+      end: frame.end.span,
     }
   }
 }
@@ -26,7 +28,12 @@ pub struct Duplicate {
 }
 
 impl Duplicate {
-  pub fn new(left: &Frame, left_path: &PathBuf, right: &Frame, right_path: &PathBuf) -> Duplicate {
+  pub fn new(
+    left: &Frame,
+    left_path: &PathBuf,
+    right: &Frame,
+    right_path: &PathBuf,
+  ) -> Duplicate {
     Self {
       left: left.into(),
       left_path: left_path.to_owned(),

@@ -1,7 +1,7 @@
-use crate::diagnostic::{Colored, DiagnosticLevel, Location};
 use serde::Serialize;
 
 use crate::colors;
+use crate::diagnostic::{Colored, DiagnosticLevel, Location};
 
 #[derive(Clone, Serialize)]
 pub struct MessageDiagnostic {
@@ -25,11 +25,8 @@ impl Colored for MessageDiagnostic {
       colors::gray(format!("{}:{}", self.scope.clone(), self.code.clone())),
       self.message,
     );
-    let pretty_location = format!(
-      "  {} {}",
-      colors::blue("-->".to_string()),
-      self.location
-    );
+    let pretty_location =
+      format!("  {} {}", colors::blue("-->".to_string()), self.location);
     let lines = vec![pretty_error, pretty_location];
     lines.join("\n")
   }
