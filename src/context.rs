@@ -1,10 +1,11 @@
-use std::sync::{Arc, Mutex};
-
-use crate::diagnostic::{Diagnostic, DiagnosticLevel, Location, MessageDiagnostic};
-
 use std::collections::HashMap;
 use std::path::PathBuf;
+use std::sync::{Arc, Mutex};
+
 use crate::cp::tok::Tok;
+use crate::diagnostic::{
+  Diagnostic, DiagnosticLevel, Location, MessageDiagnostic,
+};
 
 #[derive(Clone)]
 pub struct Context {

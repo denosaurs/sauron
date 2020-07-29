@@ -1,12 +1,13 @@
 use core::fmt;
-use std::path::PathBuf;
 use std::fmt::Formatter;
+use std::path::PathBuf;
 
 use deno_lint::diagnostic::LintDiagnostic;
 use serde::Serialize;
 
-mod message;
 pub use message::MessageDiagnostic;
+
+mod message;
 
 #[derive(Clone, Debug, Serialize)]
 pub enum DiagnosticLevel {
@@ -61,9 +62,9 @@ impl From<LintDiagnostic> for Diagnostic {
   }
 }
 
-impl Into<Location> for swc_common::Loc {
+impl Into<Location> for crate::swc_common::Loc {
   fn into(self) -> Location {
-    use swc_common::FileName::*;
+    use crate::swc_common::FileName::*;
 
     let path = match &self.file.name {
       Real(path_buf) => path_buf.to_owned(),
@@ -74,10 +75,6 @@ impl Into<Location> for swc_common::Loc {
     Location {
       path,
       line: Some(self.line),
-      // Using self.col instead of self.col_display
-      // because it leads to out-of-bounds columns if file
-      // contains non-narrow chars (like tabs).
-      // See: https://github.com/denoland/deno_lint/issues/139
       col: Some(self.col.0),
     }
   }
