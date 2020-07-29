@@ -1,26 +1,24 @@
-use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
-use std::sync::Arc;
+use std::{ffi::OsStr, sync::Arc};
 
-use crate::swc_common::errors::{ColorConfig, Handler};
 use crate::swc_common::input::SourceFileInput;
 use crate::swc_common::SourceMap;
 use crate::swc_ecma_parser::lexer::Lexer;
 use crate::swc_ecma_parser::token::TokenAndSpan;
 use crate::swc_ecma_parser::JscTarget::Es2019;
-use crate::swc_ecma_parser::{Session, Syntax};
-use deno_lint::swc_util::{get_default_es_config, get_default_ts_config};
+use crate::swc_ecma_parser::Syntax;
 
 use crate::check::Check;
 use crate::context::Context;
 use crate::cp::rabin_karp::RabinKarp;
 use crate::cp::tok::Tok;
 use crate::diagnostic::{DiagnosticLevel, Location};
-use crate::error::SauronError;
+use crate::{error::SauronError, files::MediaType, syntax};
 
 mod duplicate;
 mod frame;
 mod rabin_karp;
+
 pub mod tok;
 
 pub struct CopyPaste {
@@ -73,10 +71,8 @@ impl CopyPaste {
     &self,
     path: &Path,
   ) -> Result<Vec<TokenAndSpan>, SauronError> {
-    match path.extension().and_then(OsStr::to_str) {
-      Some("ts") => self.parse(path, get_default_ts_config()),
-      _ => self.parse(path, get_default_es_config()),
-    }
+    let media = MediaType::from(path);
+    self.parse(path, syntax::get_syntax_for_media_type(media))
   }
 
   pub fn parse(
@@ -85,19 +81,9 @@ impl CopyPaste {
     syntax: Syntax,
   ) -> Result<Vec<TokenAndSpan>, SauronError> {
     crate::swc_common::GLOBALS.set(&crate::swc_common::Globals::new(), || {
-      let handler = Handler::with_tty_emitter(
-        ColorConfig::Auto,
-        true,
-        false,
-        Some(self.source_map.clone()),
-      );
-
-      let session = Session { handler: &handler };
-
       let fm = self.source_map.load_file(path).map_err(|_e| SauronError)?;
 
-      let lexer =
-        Lexer::new(session, syntax, Es2019, SourceFileInput::from(&*fm), None);
+      let lexer = Lexer::new(syntax, Es2019, SourceFileInput::from(&*fm), None);
 
       let tokens: Vec<TokenAndSpan> = lexer.collect();
       Ok(tokens)

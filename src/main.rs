@@ -16,6 +16,7 @@ mod cp;
 mod diagnostic;
 mod error;
 mod files;
+mod syntax;
 
 pub use deno_lint::dprint_plugin_typescript;
 pub use deno_lint::swc_common;
@@ -56,7 +57,7 @@ fn main() {
 
   let structure_rules = structure::rules::get_all_rules();
   let linter_rule = linter::Linter::default();
-  // let cp_rule = cp::CopyPaste::default();
+  let cp_rule = cp::CopyPaste::default();
 
   let context = Context::default();
 
@@ -71,7 +72,7 @@ fn main() {
       }
 
       linter_rule.check_file(context.scope("lint"), &path, root);
-      // cp_rule.check_file(context.scope("copypaste"), &path, root)
+      cp_rule.check_file(context.scope("copypaste"), &path, root)
     }
   }
 
@@ -79,7 +80,7 @@ fn main() {
     structure_rule.check_context(context.scope("structure"), &root_dir);
   }
 
-  // cp_rule.check_context(context.scope("copypaste"), &root_dir);
+  cp_rule.check_context(context.scope("copypaste"), &root_dir);
 
   let diagnostics = context.diagnostics.lock().unwrap();
   if !diagnostics.is_empty() {

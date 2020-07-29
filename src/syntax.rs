@@ -1,5 +1,3 @@
-use std::path::Path;
-
 use crate::files::MediaType;
 use crate::swc_ecma_parser::{EsConfig, Syntax, TsConfig};
 
