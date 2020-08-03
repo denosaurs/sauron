@@ -1,0 +1,16 @@
+[package]
+name = "sauron_duplicate"
+description = ""
+repository = "https://github.com/denosaurs/sauron"
+license = "MIT"
+version = "0.1.0"
+authors = ["Filippo Rossi"]
+edition = "2018"
+
+[dependencies]
+swc_atoms = "0.2.2"
+swc_common = "=0.8.0"
+swc_ecmascript = { version = "=0.1.0", features = ["parser", "visit"] }
+sauron_core = { path = "../sauron_core" }
+serde = "1.0"
+colored = "2"

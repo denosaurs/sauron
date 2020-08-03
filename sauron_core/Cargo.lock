@@ -446,9 +446,9 @@ checksum = "1ab52be62400ca80aa00285d25253d7f7c437b7375c4de678f5405d3afe82ca5"
 
 [[package]]
 name = "os_str_bytes"
-version = "2.3.2"
+version = "2.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2ac6fe3538f701e339953a3ebbe4f39941aababa8a3f6964635b24ab526daeac"
+checksum = "06de47b848347d8c4c94219ad8ecd35eb90231704b067e67e6ae2e36ee023510"
 
 [[package]]
 name = "os_type"
@@ -786,65 +786,20 @@ dependencies = [
 ]
 
 [[package]]
-name = "sauron_cli"
+name = "sauron_core"
 version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
  "colored",
+ "deno_lint",
  "human-panic",
  "regex",
- "sauron_core",
- "sauron_duplicate",
- "sauron_linter",
- "sauron_structure",
+ "serde",
+ "swc_atoms",
+ "swc_common",
+ "swc_ecmascript",
  "walkdir",
-]
-
-[[package]]
-name = "sauron_core"
-version = "0.1.0"
-dependencies = [
- "colored",
- "serde",
- "swc_atoms",
- "swc_common",
- "swc_ecmascript",
- "thiserror",
-]
-
-[[package]]
-name = "sauron_duplicate"
-version = "0.1.0"
-dependencies = [
- "colored",
- "sauron_core",
- "serde",
- "swc_atoms",
- "swc_common",
- "swc_ecmascript",
-]
-
-[[package]]
-name = "sauron_linter"
-version = "0.1.0"
-dependencies = [
- "colored",
- "deno_lint",
- "sauron_core",
- "serde",
- "swc_ecmascript",
-]
-
-[[package]]
-name = "sauron_structure"
-version = "0.1.0"
-dependencies = [
- "colored",
- "regex",
- "sauron_core",
- "serde",
- "thiserror",
 ]
 
 [[package]]
@@ -1147,26 +1102,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d326610f408c7a4eb6f51c37c330e496b08506c9457c9d34287ecc38809fb060"
 dependencies = [
  "unicode-width",
-]
-
-[[package]]
-name = "thiserror"
-version = "1.0.20"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7dfdd070ccd8ccb78f4ad66bf1982dc37f620ef696c6b5028fe2ed83dd3d0d08"
-dependencies = [
- "thiserror-impl",
-]
-
-[[package]]
-name = "thiserror-impl"
-version = "1.0.20"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bd80fc12f73063ac132ac92aceea36734f04a1d93c1240c6944e23a3b8841793"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
 ]
 
 [[package]]

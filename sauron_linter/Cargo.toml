@@ -1,0 +1,15 @@
+[package]
+name = "sauron_linter"
+description = "Module linting tool for Deno"
+repository = "https://github.com/denosaurs/sauron"
+license = "MIT"
+version = "0.1.0"
+authors = ["Filippo Rossi"]
+edition = "2018"
+
+[dependencies]
+swc_ecmascript = { version = "=0.1.0", features = ["parser", "visit"] }
+sauron_core = { path = "../sauron_core" }
+serde = "1.0"
+colored = "2"
+deno_lint = "0.1.20"

@@ -1,0 +1,92 @@
+use std::{ffi::OsStr, sync::Arc};
+use std::path::{Path, PathBuf};
+
+use swc_common::input::SourceFileInput;
+use swc_common::SourceMap;
+use swc_ecmascript::parser::JscTarget::Es2019;
+use swc_ecmascript::parser::lexer::Lexer;
+use swc_ecmascript::parser::Syntax;
+use swc_ecmascript::parser::token::TokenAndSpan;
+
+pub use context::DuplicateContext;
+use sauron_core::{
+  diagnostic::FileLocation, error::SauronCoreError, files::MediaType,
+  rule::Rule, syntax,
+};
+
+use crate::rabin_karp::RabinKarp;
+use crate::tok::Tok;
+
+mod context;
+mod diagnostic;
+mod ditto;
+mod frame;
+mod rabin_karp;
+mod tok;
+
+pub struct Duplicate {
+  source_map: Arc<SourceMap>,
+}
+
+impl Rule<DuplicateContext> for Duplicate {
+  fn check_file(
+    &self,
+    ctx: Arc<DuplicateContext>,
+    path: &PathBuf,
+    _root: bool,
+  ) {
+    match path.extension().and_then(OsStr::to_str) {
+      Some("ts") => (),
+      Some("js") => (),
+      _ => return,
+    };
+
+    if let Ok(tokens) = self.parse_file(path) {
+      let tokens: Vec<Tok> = tokens.iter().map(Tok::from).collect();
+      ctx.add_tokens(path.to_owned(), tokens);
+    }
+  }
+
+  fn check_context(&self, ctx: Arc<DuplicateContext>, _path: &PathBuf) {
+    let dupes =
+      RabinKarp::find_duplicates(ctx.get_tokens(), ctx.config.min_tokens);
+    for dupe in &dupes {
+      let left: FileLocation =
+        self.source_map.lookup_char_pos(dupe.left.start.lo).into();
+      let right: FileLocation =
+        self.source_map.lookup_char_pos(dupe.right.start.lo).into();
+      ctx.add_diagnostic(left, right)
+    }
+  }
+}
+
+impl Default for Duplicate {
+  fn default() -> Self {
+    Self {
+      source_map: Arc::new(SourceMap::default()),
+    }
+  }
+}
+
+impl Duplicate {
+  pub fn parse_file(
+    &self,
+    path: &Path,
+  ) -> Result<Vec<TokenAndSpan>, SauronCoreError> {
+    let media = MediaType::from(path);
+    self.parse(path, syntax::get_syntax_for_media_type(media))
+  }
+
+  pub fn parse(
+    &self,
+    path: &Path,
+    syntax: Syntax,
+  ) -> Result<Vec<TokenAndSpan>, SauronCoreError> {
+    swc_common::GLOBALS.set(&swc_common::Globals::new(), || {
+      let fm = self.source_map.load_file(path)?;
+      let lexer = Lexer::new(syntax, Es2019, SourceFileInput::from(&*fm), None);
+      let tokens: Vec<TokenAndSpan> = lexer.collect();
+      Ok(tokens)
+    })
+  }
+}

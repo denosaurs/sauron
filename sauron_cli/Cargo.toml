@@ -1,0 +1,24 @@
+[package]
+name = "sauron_cli"
+description = "Module linting tool for Deno"
+repository = "https://github.com/denosaurs/sauron"
+license = "MIT"
+version = "0.1.0"
+authors = ["Filippo Rossi", "Elias Sjögreen"]
+edition = "2018"
+
+[[bin]]
+name = "sauron"
+path = "src/main.rs"
+
+[dependencies]
+sauron_core = { path = "../sauron_core" }
+sauron_linter = { path = "../sauron_linter" }
+sauron_structure = { path = "../sauron_structure" }
+sauron_duplicate = { path = "../sauron_duplicate" }
+walkdir = "2.3"
+regex = "1.3"
+clap = "3.0.0-beta.1"
+colored = "2"
+human-panic = "1.0"
+anyhow = "1.0"
