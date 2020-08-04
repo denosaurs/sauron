@@ -12,9 +12,6 @@ use sauron_linter::{Linter, LinterContext};
 use sauron_structure::{rules, StructureContext};
 
 fn main() {
-  #[cfg(windows)]
-  colors::enable_ansi();
-
   let matches = app_from_crate!()
     .arg(
       Arg::with_name("directory")
