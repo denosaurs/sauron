@@ -1,5 +1,5 @@
-use std::{fs, sync::Arc};
 use std::path::{Path, PathBuf};
+use std::{fs, sync::Arc};
 
 use deno_lint::linter::LinterBuilder;
 use deno_lint::rules::LintRule;

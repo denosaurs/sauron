@@ -1,5 +1,5 @@
-use sauron_core::rule::Rule;
 use crate::StructureContext;
+use sauron_core::rule::Rule;
 
 mod has_deps;
 mod has_license;
@@ -10,8 +10,8 @@ mod snake_case;
 
 pub trait StructureRule: Rule<StructureContext> {
   fn new() -> Box<Self>
-    where
-      Self: Sized;
+  where
+    Self: Sized;
 }
 
 pub fn get_all_rules() -> Vec<Box<dyn StructureRule>> {

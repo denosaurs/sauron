@@ -1,11 +1,9 @@
-use std::{fmt, path::PathBuf};
+use std::fmt;
 
 use serde::Serialize;
 
 use colored::*;
-use sauron_core::diagnostic::{
-  Diagnostic, DiagnosticLevel, FileLocation, Location,
-};
+use sauron_core::diagnostic::{Diagnostic, DiagnosticLevel, Location};
 
 #[derive(Clone, Serialize)]
 pub struct StructureDiagnostic {

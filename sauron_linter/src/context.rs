@@ -4,6 +4,8 @@ use sauron_core::context::Context;
 
 use crate::diagnostic::LinterDiagnostic;
 
+// TODO(divy-work): Remove this macro when all_rules is used
+#[allow(dead_code)]
 pub struct LinterConfig {
   all_rules: bool,
 }

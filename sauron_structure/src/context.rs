@@ -6,6 +6,8 @@ use sauron_core::diagnostic::{DiagnosticLevel, Location};
 
 use crate::diagnostic::StructureDiagnostic;
 
+// TODO(divy-work): Remove this macro when all_rules is used
+#[allow(dead_code)]
 pub struct StructureConfig {
   all_rules: bool,
 }
@@ -38,7 +40,7 @@ impl StructureContext {
       level,
       code: code.to_string(),
       message: message.to_string(),
-      location: Location::Directory(path.to_owned())
+      location: Location::Directory(path.to_owned()),
     });
   }
 
@@ -49,10 +51,7 @@ impl StructureContext {
 
   pub fn get_flag(&self, key: &str) -> bool {
     let flags = self.flags.lock().unwrap();
-    flags
-      .get(key)
-      .cloned()
-      .unwrap_or(false)
+    flags.get(key).cloned().unwrap_or(false)
   }
 }
 
@@ -60,7 +59,7 @@ impl Context<StructureDiagnostic> for StructureContext {
   fn new(_: ()) -> Arc<Self> {
     Arc::new(Self {
       diagnostics: Arc::new(Mutex::new(vec![])),
-      flags: Arc::new(Mutex::new(HashMap::new()))
+      flags: Arc::new(Mutex::new(HashMap::new())),
     })
   }
   fn diagnostics(&self) -> &Arc<Mutex<Vec<StructureDiagnostic>>> {

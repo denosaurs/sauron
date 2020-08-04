@@ -1,5 +1,5 @@
-use std::{path::PathBuf, sync::Arc};
 use std::ffi::OsStr;
+use std::{path::PathBuf, sync::Arc};
 
 use sauron_core::{diagnostic::DiagnosticLevel, rule::Rule};
 

@@ -1,12 +1,12 @@
-use std::{ffi::OsStr, sync::Arc};
 use std::path::{Path, PathBuf};
+use std::{ffi::OsStr, sync::Arc};
 
 use swc_common::input::SourceFileInput;
 use swc_common::SourceMap;
-use swc_ecmascript::parser::JscTarget::Es2019;
 use swc_ecmascript::parser::lexer::Lexer;
-use swc_ecmascript::parser::Syntax;
 use swc_ecmascript::parser::token::TokenAndSpan;
+use swc_ecmascript::parser::JscTarget::Es2019;
+use swc_ecmascript::parser::Syntax;
 
 pub use context::DuplicateContext;
 use sauron_core::{

@@ -1,5 +1,5 @@
-use std::{path::PathBuf, sync::Arc};
 use std::ffi::OsStr;
+use std::{path::PathBuf, sync::Arc};
 
 use regex::Regex;
 
@@ -12,7 +12,12 @@ use super::StructureRule;
 pub struct SnakeCase;
 
 impl Rule<StructureContext> for SnakeCase {
-  fn check_file(&self, ctx: Arc<StructureContext>, path: &PathBuf, _root: bool) {
+  fn check_file(
+    &self,
+    ctx: Arc<StructureContext>,
+    path: &PathBuf,
+    _root: bool,
+  ) {
     match path.extension().and_then(OsStr::to_str) {
       Some("ts") => (),
       Some("js") => (),
