@@ -1,5 +1,5 @@
 use std::path::{Path, PathBuf};
-use std::{ffi::OsStr, sync::Arc};
+use std::sync::Arc;
 
 use swc_common::input::SourceFileInput;
 use swc_common::SourceMap;
@@ -24,6 +24,18 @@ mod frame;
 mod rabin_karp;
 mod tok;
 
+fn is_supported(path: &Path) -> bool {
+  let lowercase_ext = path
+    .extension()
+    .and_then(|e| e.to_str())
+    .map(|e| e.to_lowercase());
+  if let Some(ext) = lowercase_ext {
+    ext == "ts" || ext == "tsx" || ext == "js" || ext == "jsx" || ext == "mjs"
+  } else {
+    false
+  }
+}
+
 pub struct Duplicate {
   source_map: Arc<SourceMap>,
 }
@@ -36,15 +48,11 @@ impl Rule<DuplicateContext> for Duplicate {
     data: String,
     _root: bool,
   ) {
-    match path.extension().and_then(OsStr::to_str) {
-      Some("ts") => (),
-      Some("js") => (),
-      _ => return,
-    };
-
-    if let Ok(tokens) = self.parse_file(path, data) {
-      let tokens: Vec<Tok> = tokens.iter().map(Tok::from).collect();
-      ctx.add_tokens(path.to_owned(), tokens);
+    if is_supported(path) {
+      if let Ok(tokens) = self.parse_file(path, data) {
+        let tokens: Vec<Tok> = tokens.iter().map(Tok::from).collect();
+        ctx.add_tokens(path.to_owned(), tokens);
+      }
     }
   }
 

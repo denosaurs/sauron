@@ -65,7 +65,7 @@ impl Rule<LintContext> for Linter {
     data: String,
     _root: bool,
   ) {
-    if path.is_file() && is_supported(path.as_path()) {
+    if is_supported(path) {
       let diagnostics = lint_file(path.to_owned(), data);
       for diagnostic in &diagnostics {
         ctx.add_diagnostic(diagnostic.clone().into())
