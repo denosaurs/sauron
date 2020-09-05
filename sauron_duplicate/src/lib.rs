@@ -29,10 +29,11 @@ pub struct Duplicate {
 }
 
 impl Rule<DuplicateContext> for Duplicate {
-  fn check_path(
+  fn check_file(
     &self,
     ctx: Arc<DuplicateContext>,
     path: &PathBuf,
+    data: String,
     _root: bool,
   ) {
     match path.extension().and_then(OsStr::to_str) {
@@ -41,7 +42,7 @@ impl Rule<DuplicateContext> for Duplicate {
       _ => return,
     };
 
-    if let Ok(tokens) = self.parse_file(path) {
+    if let Ok(tokens) = self.parse_file(path, data) {
       let tokens: Vec<Tok> = tokens.iter().map(Tok::from).collect();
       ctx.add_tokens(path.to_owned(), tokens);
     }
@@ -72,18 +73,20 @@ impl Duplicate {
   pub fn parse_file(
     &self,
     path: &Path,
+    data: String
   ) -> Result<Vec<TokenAndSpan>, SauronCoreError> {
     let media = MediaType::from(path);
-    self.parse(path, syntax::get_syntax_for_media_type(media))
+    self.parse(path, data, syntax::get_syntax_for_media_type(media))
   }
 
   pub fn parse(
     &self,
     path: &Path,
+    data: String,
     syntax: Syntax,
   ) -> Result<Vec<TokenAndSpan>, SauronCoreError> {
     swc_common::GLOBALS.set(&swc_common::Globals::new(), || {
-      let fm = self.source_map.load_file(path)?;
+      let fm = self.source_map.new_source_file(path.to_owned().into(), data);
       let lexer = Lexer::new(syntax, Es2019, SourceFileInput::from(&*fm), None);
       let tokens: Vec<TokenAndSpan> = lexer.collect();
       Ok(tokens)
