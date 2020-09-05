@@ -12,7 +12,7 @@ use super::StructureRule;
 pub struct SnakeCase;
 
 impl Rule<StructureContext> for SnakeCase {
-  fn check_file(
+  fn check_path(
     &self,
     ctx: Arc<StructureContext>,
     path: &PathBuf,

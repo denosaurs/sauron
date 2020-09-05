@@ -10,7 +10,7 @@ use super::StructureRule;
 pub struct HasLicense;
 
 impl Rule<StructureContext> for HasLicense {
-  fn check_file(&self, ctx: Arc<StructureContext>, path: &PathBuf, root: bool) {
+  fn check_path(&self, ctx: Arc<StructureContext>, path: &PathBuf, root: bool) {
     if !root {
       return;
     }

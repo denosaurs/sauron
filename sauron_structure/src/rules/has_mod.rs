@@ -10,7 +10,7 @@ use super::StructureRule;
 pub struct HasMod;
 
 impl Rule<StructureContext> for HasMod {
-  fn check_file(&self, ctx: Arc<StructureContext>, path: &PathBuf, root: bool) {
+  fn check_path(&self, ctx: Arc<StructureContext>, path: &PathBuf, root: bool) {
     if !root {
       return;
     }

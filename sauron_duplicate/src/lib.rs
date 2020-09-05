@@ -29,7 +29,7 @@ pub struct Duplicate {
 }
 
 impl Rule<DuplicateContext> for Duplicate {
-  fn check_file(
+  fn check_path(
     &self,
     ctx: Arc<DuplicateContext>,
     path: &PathBuf,

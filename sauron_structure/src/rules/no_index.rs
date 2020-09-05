@@ -10,7 +10,7 @@ use super::StructureRule;
 pub struct NoIndex;
 
 impl Rule<StructureContext> for NoIndex {
-  fn check_file(&self, ctx: Arc<StructureContext>, path: &PathBuf, root: bool) {
+  fn check_path(&self, ctx: Arc<StructureContext>, path: &PathBuf, root: bool) {
     if !root {
       return;
     }
