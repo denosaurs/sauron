@@ -8,7 +8,8 @@ use walkdir::WalkDir;
 
 use sauron_core::{context::Context, rule::Rule};
 use sauron_duplicate::{Duplicate, DuplicateContext};
-use sauron_lint::{Linter, LintContext};
+use sauron_fmt::{FmtContext, Formatter};
+use sauron_lint::{LintContext, Linter};
 use sauron_structure::{rules, StructureContext};
 
 fn main() {
@@ -37,6 +38,9 @@ fn main() {
   let structure_rules = rules::get_all_rules();
   let structure_ctx = StructureContext::default();
 
+  let formatter_rule = Formatter::default();
+  let formatter_ctx = FmtContext::default();
+
   let linter_rule = Linter::default();
   let linter_ctx = LintContext::default();
 
@@ -48,14 +52,36 @@ fn main() {
     if let Ok(entry) = entry {
       let path = &entry.into_path();
       let root = path.parent().unwrap() == root_dir.as_path();
-      let data = fs::read_to_string(path).unwrap();
 
       for structure_rule in &structure_rules {
         structure_rule.check_path(structure_ctx.clone(), path, root);
       }
-
-      linter_rule.check_file(linter_ctx.clone(), &path, data, root);
-      duplicate_rule.check_path(duplicate_ctx.clone(), &path, root)
+      
+      if path.is_file() {
+        match fs::read_to_string(path) {
+          Ok(data) => {
+            duplicate_rule.check_file(duplicate_ctx.clone(), &path, data.clone(), root);
+            formatter_rule.check_file(
+              formatter_ctx.clone(),
+              &path,
+              data.clone(),
+              root,
+            );
+            linter_rule.check_file(linter_ctx.clone(), &path, data, root);
+          },
+          Err(e) => {
+            if e.kind() != std::io::ErrorKind::InvalidData {
+              println!(
+                "{}: file `{}` could not be read because {}",
+                "error".red().bold(),
+                path.display(),
+                e
+              );
+              exit(1);
+            }
+          }
+        }
+      }
     }
   }
 
@@ -66,6 +92,20 @@ fn main() {
   duplicate_rule.check_context(duplicate_ctx.clone(), &root_dir);
 
   let diagnostics = duplicate_ctx.diagnostics().lock().unwrap();
+  if !diagnostics.is_empty() {
+    for d in diagnostics.iter() {
+      println!();
+      println!("{}", d);
+    }
+    println!();
+    println!(
+      "{} - found {} problem[s]",
+      "results".red().bold(),
+      diagnostics.len()
+    );
+  }
+
+  let diagnostics = formatter_ctx.diagnostics().lock().unwrap();
   if !diagnostics.is_empty() {
     for d in diagnostics.iter() {
       println!();
