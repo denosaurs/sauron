@@ -6,7 +6,7 @@ use deno_lint::rules::LintRule;
 use deno_lint::rules::get_recommended_rules;
 use swc_ecmascript::parser::Syntax;
 
-pub use context::LinterContext;
+pub use context::LintContext;
 use sauron_core::{files::MediaType, rule::Rule, syntax};
 
 pub struct Linter;
@@ -57,10 +57,10 @@ fn is_supported(path: &Path) -> bool {
   }
 }
 
-impl Rule<LinterContext> for Linter {
+impl Rule<LintContext> for Linter {
   fn check_file(
     &self,
-    ctx: Arc<LinterContext>,
+    ctx: Arc<LintContext>,
     path: &PathBuf,
     data: String,
     _root: bool,

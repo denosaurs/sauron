@@ -9,14 +9,14 @@ use sauron_core::diagnostic::{
 };
 
 #[derive(Clone, Serialize)]
-pub struct LinterDiagnostic {
+pub struct LintDiagnostic {
   pub level: DiagnosticLevel,
   pub location: Location,
   pub message: String,
   pub code: String,
 }
 
-impl fmt::Display for LinterDiagnostic {
+impl fmt::Display for LintDiagnostic {
   fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
     f.write_fmt(format_args!(
       "{} ({}): {}",
@@ -29,7 +29,7 @@ impl fmt::Display for LinterDiagnostic {
   }
 }
 
-impl Diagnostic for LinterDiagnostic {
+impl Diagnostic for LintDiagnostic {
   fn level(&self) -> DiagnosticLevel {
     self.level.clone()
   }
@@ -47,10 +47,10 @@ impl Diagnostic for LinterDiagnostic {
   }
 }
 
-impl From<DLintDiagnostic> for LinterDiagnostic {
+impl From<DLintDiagnostic> for LintDiagnostic {
   fn from(diag: DLintDiagnostic) -> Self {
     let path = PathBuf::from(diag.filename.clone());
-    LinterDiagnostic {
+    LintDiagnostic {
       level: DiagnosticLevel::Recommended,
       location: Location::File(FileLocation {
         path,
