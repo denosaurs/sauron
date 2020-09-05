@@ -8,7 +8,7 @@ use walkdir::WalkDir;
 
 use sauron_core::{context::Context, rule::Rule};
 use sauron_duplicate::{Duplicate, DuplicateContext};
-use sauron_linter::{Linter, LinterContext};
+use sauron_lint::{Linter, LinterContext};
 use sauron_structure::{rules, StructureContext};
 
 fn main() {

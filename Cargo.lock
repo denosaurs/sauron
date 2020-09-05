@@ -687,7 +687,7 @@ dependencies = [
  "regex",
  "sauron_core",
  "sauron_duplicate",
- "sauron_linter",
+ "sauron_lint",
  "sauron_structure",
  "walkdir",
 ]
@@ -717,7 +717,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "sauron_linter"
+name = "sauron_lint"
 version = "0.1.0"
 dependencies = [
  "colored",

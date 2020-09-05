@@ -13,7 +13,7 @@ path = "src/main.rs"
 
 [dependencies]
 sauron_core = { path = "../sauron_core" }
-sauron_linter = { path = "../sauron_linter" }
+sauron_lint = { path = "../sauron_lint" }
 sauron_structure = { path = "../sauron_structure" }
 sauron_duplicate = { path = "../sauron_duplicate" }
 walkdir = "2.3"

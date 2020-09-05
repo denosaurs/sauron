@@ -1,5 +1,5 @@
 [package]
-name = "sauron_linter"
+name = "sauron_lint"
 description = "Module linting tool for Deno"
 repository = "https://github.com/denosaurs/sauron"
 license = "MIT"

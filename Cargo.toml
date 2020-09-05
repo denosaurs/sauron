@@ -4,6 +4,6 @@ members = [
     "sauron_cli",
     "sauron_core",
     "sauron_duplicate",
-    "sauron_linter",
+    "sauron_lint",
     "sauron_structure",
 ]
