@@ -202,6 +202,33 @@ dependencies = [
 ]
 
 [[package]]
+name = "diff"
+version = "0.1.12"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0e25ea47919b1560c4e3b7fe0aaab9becf5b84a10325ddf7db0f0ba5e1026499"
+
+[[package]]
+name = "dprint-core"
+version = "0.28.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fab44561ffc8f70d26d6c4cc81a648ecd47dd60836abecf0599253a7b9fdbf5d"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "dprint-plugin-typescript"
+version = "0.30.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "aa33c3669a2b89c6a8809d34648422262907b2f7cc15d51fe53c860f5161626b"
+dependencies = [
+ "dprint-core",
+ "serde",
+ "swc_common",
+ "swc_ecmascript",
+]
+
+[[package]]
 name = "either"
 version = "1.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -687,6 +714,7 @@ dependencies = [
  "regex",
  "sauron_core",
  "sauron_duplicate",
+ "sauron_fmt",
  "sauron_lint",
  "sauron_structure",
  "walkdir",
@@ -714,6 +742,17 @@ dependencies = [
  "swc_atoms",
  "swc_common",
  "swc_ecmascript",
+]
+
+[[package]]
+name = "sauron_fmt"
+version = "0.1.0"
+dependencies = [
+ "colored",
+ "diff",
+ "dprint-plugin-typescript",
+ "sauron_core",
+ "serde",
 ]
 
 [[package]]
