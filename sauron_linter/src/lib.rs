@@ -3,6 +3,7 @@ use std::sync::Arc;
 
 use deno_lint::linter::LinterBuilder;
 use deno_lint::rules::LintRule;
+use deno_lint::rules::get_recommended_rules;
 use swc_ecmascript::parser::Syntax;
 
 pub use context::LinterContext;
@@ -12,7 +13,6 @@ pub struct Linter;
 
 mod context;
 mod diagnostic;
-mod rules;
 
 fn create_linter(
   syntax: Syntax,
@@ -39,7 +39,7 @@ fn lint_file(
   let media_type = MediaType::from(file_path.as_path());
   let syntax = syntax::get_syntax_for_media_type(media_type);
 
-  let lint_rules = rules::get_deno_rules();
+  let lint_rules = get_recommended_rules();
   let mut linter = create_linter(syntax, lint_rules);
 
   linter.lint(file_name, file_data).unwrap()
