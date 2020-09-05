@@ -8,7 +8,7 @@ use walkdir::WalkDir;
 
 use sauron_core::{context::Context, rule::Rule};
 use sauron_duplicate::{Duplicate, DuplicateContext};
-use sauron_lint::{Linter, LinterContext};
+use sauron_lint::{Linter, LintContext};
 use sauron_structure::{rules, StructureContext};
 
 fn main() {
@@ -38,7 +38,7 @@ fn main() {
   let structure_ctx = StructureContext::default();
 
   let linter_rule = Linter::default();
-  let linter_ctx = LinterContext::default();
+  let linter_ctx = LintContext::default();
 
   let duplicate_rule = Duplicate::default();
   let duplicate_ctx = DuplicateContext::default();
