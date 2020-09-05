@@ -1,8 +1,8 @@
 [workspace]
 
 members = [
-    "sauron_core",
     "sauron_cli",
+    "sauron_core",
     "sauron_duplicate",
     "sauron_linter",
     "sauron_structure",
