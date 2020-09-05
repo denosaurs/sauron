@@ -49,13 +49,13 @@ impl Diagnostic for LinterDiagnostic {
 
 impl From<DLintDiagnostic> for LinterDiagnostic {
   fn from(diag: DLintDiagnostic) -> Self {
-    let path = PathBuf::from(diag.location.filename.clone());
+    let path = PathBuf::from(diag.filename.clone());
     LinterDiagnostic {
       level: DiagnosticLevel::Recommended,
       location: Location::File(FileLocation {
         path,
-        line: Some(diag.location.line),
-        col: Some(diag.location.col),
+        line: Some(diag.range.start.line),
+        col: Some(diag.range.start.col),
       }),
       code: diag.code,
       message: diag.message,

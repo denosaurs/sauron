@@ -46,15 +46,16 @@ fn main() {
   let walk = WalkDir::new(&root_dir);
   for entry in walk {
     if let Ok(entry) = entry {
-      let path = entry.into_path();
+      let path = &entry.into_path();
       let root = path.parent().unwrap() == root_dir.as_path();
+      let data = fs::read_to_string(path).unwrap();
 
       for structure_rule in &structure_rules {
-        structure_rule.check_file(structure_ctx.clone(), &path, root);
+        structure_rule.check_path(structure_ctx.clone(), path, root);
       }
 
-      linter_rule.check_file(linter_ctx.clone(), &path, root);
-      duplicate_rule.check_file(duplicate_ctx.clone(), &path, root)
+      linter_rule.check_file(linter_ctx.clone(), &path, data, root);
+      duplicate_rule.check_path(duplicate_ctx.clone(), &path, root)
     }
   }
 

@@ -1,5 +1,5 @@
 use std::path::{Path, PathBuf};
-use std::{fs, sync::Arc};
+use std::sync::Arc;
 
 use deno_lint::linter::LinterBuilder;
 use deno_lint::rules::LintRule;
@@ -31,16 +31,15 @@ fn create_linter(
     .build()
 }
 
-fn lint_file(file_path: PathBuf) -> Vec<deno_lint::diagnostic::LintDiagnostic> {
+fn lint_file(file_path: PathBuf, file_data: String) -> Vec<deno_lint::diagnostic::LintDiagnostic> {
   let file_name = file_path.to_string_lossy().to_string();
-  let source_code = fs::read_to_string(&file_path).unwrap();
   let media_type = MediaType::from(file_path.as_path());
   let syntax = syntax::get_syntax_for_media_type(media_type);
 
   let lint_rules = rules::get_deno_rules();
   let mut linter = create_linter(syntax, lint_rules);
 
-  linter.lint(file_name, source_code).unwrap()
+  linter.lint(file_name, file_data).unwrap()
 }
 
 fn is_supported(path: &Path) -> bool {
@@ -56,9 +55,9 @@ fn is_supported(path: &Path) -> bool {
 }
 
 impl Rule<LinterContext> for Linter {
-  fn check_file(&self, ctx: Arc<LinterContext>, path: &PathBuf, _root: bool) {
+  fn check_file(&self, ctx: Arc<LinterContext>, path: &PathBuf, data: String, _root: bool) {
     if path.is_file() && is_supported(path.as_path()) {
-      let diagnostics = lint_file(path.to_owned());
+      let diagnostics = lint_file(path.to_owned(), data);
       for diagnostic in &diagnostics {
         ctx.add_diagnostic(diagnostic.clone().into())
       }
