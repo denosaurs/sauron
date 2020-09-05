@@ -11,6 +11,6 @@ edition = "2018"
 thiserror = "1.0"
 serde = "1.0"
 colored = "2"
-swc_atoms = "0.2.2"
-swc_common = "=0.8.0"
-swc_ecmascript = { version = "=0.1.0", features = ["parser", "visit"] }
+swc_atoms = "0.2"
+swc_common = "=0.10.2"
+swc_ecmascript = { version = "=0.7.0", features = ["parser", "visit"] }
