@@ -7,12 +7,10 @@
   </p>
 
   <sub>Built with 🦀 by <a href="https://denosaurs.land/">The Denosaurs Team</a></sub>
+
+  [![CI Status](https://img.shields.io/github/workflow/status/denosaurs/sauron/checks)](https://github.com/denosaurs/sauron/actions)
+  [![License](https://img.shields.io/github/license/denosaurs/sauron)](https://github.com/denosaurs/sauron/blob/master/LICENSE)
 </div>
-
-
-[![Tags](https://img.shields.io/github/release/denosaurs/sauron)](https://github.com/denosaurs/sauron/releases)
-[![CI Status](https://img.shields.io/github/workflow/status/denosaurs/sauron/check)](https://github.com/denosaurs/sauron/actions)
-[![License](https://img.shields.io/github/license/denosaurs/sauron)](https://github.com/denosaurs/sauron/blob/master/LICENSE)
 
 ---
 > ⚠️ NOTICE: this repo will be republished asap, for now it's just a playground
