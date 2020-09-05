@@ -56,11 +56,16 @@ fn main() {
       for structure_rule in &structure_rules {
         structure_rule.check_path(structure_ctx.clone(), path, root);
       }
-      
+
       if path.is_file() {
         match fs::read_to_string(path) {
           Ok(data) => {
-            duplicate_rule.check_file(duplicate_ctx.clone(), &path, data.clone(), root);
+            duplicate_rule.check_file(
+              duplicate_ctx.clone(),
+              &path,
+              data.clone(),
+              root,
+            );
             formatter_rule.check_file(
               formatter_ctx.clone(),
               &path,
@@ -68,7 +73,7 @@ fn main() {
               root,
             );
             linter_rule.check_file(linter_ctx.clone(), &path, data, root);
-          },
+          }
           Err(e) => {
             if e.kind() != std::io::ErrorKind::InvalidData {
               println!(

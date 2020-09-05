@@ -81,7 +81,7 @@ impl Duplicate {
   pub fn parse_file(
     &self,
     path: &Path,
-    data: String
+    data: String,
   ) -> Result<Vec<TokenAndSpan>, SauronCoreError> {
     let media = MediaType::from(path);
     self.parse(path, data, syntax::get_syntax_for_media_type(media))
@@ -94,7 +94,9 @@ impl Duplicate {
     syntax: Syntax,
   ) -> Result<Vec<TokenAndSpan>, SauronCoreError> {
     swc_common::GLOBALS.set(&swc_common::Globals::new(), || {
-      let fm = self.source_map.new_source_file(path.to_owned().into(), data);
+      let fm = self
+        .source_map
+        .new_source_file(path.to_owned().into(), data);
       let lexer = Lexer::new(syntax, Es2019, SourceFileInput::from(&*fm), None);
       let tokens: Vec<TokenAndSpan> = lexer.collect();
       Ok(tokens)

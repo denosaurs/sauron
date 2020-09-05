@@ -3,7 +3,9 @@ use std::fmt;
 use colored::*;
 use serde::Serialize;
 
-use sauron_core::diagnostic::{Diagnostic, DiagnosticLevel, Location, FileLocation};
+use sauron_core::diagnostic::{
+  Diagnostic, DiagnosticLevel, FileLocation, Location,
+};
 
 #[derive(Clone, Serialize)]
 pub struct FmtDiagnostic {
