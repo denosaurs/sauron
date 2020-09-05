@@ -4,7 +4,7 @@ description = "Module linting tool for Deno"
 repository = "https://github.com/denosaurs/sauron"
 license = "MIT"
 version = "0.1.0"
-authors = ["Filippo Rossi"]
+authors = ["Filippo Rossi", "Elias Sjögreen"]
 edition = "2018"
 
 [dependencies]

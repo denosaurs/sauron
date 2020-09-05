@@ -1,10 +1,10 @@
 [package]
 name = "sauron_lint"
-description = "Module linting tool for Deno"
+description = "deno lint for sauron"
 repository = "https://github.com/denosaurs/sauron"
 license = "MIT"
 version = "0.1.0"
-authors = ["Filippo Rossi"]
+authors = ["Filippo Rossi", "Elias Sjögreen"]
 edition = "2018"
 
 [dependencies]
