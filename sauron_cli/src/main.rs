@@ -96,59 +96,37 @@ fn main() {
 
   duplicate_rule.check_context(duplicate_ctx.clone(), &root_dir);
 
-  let diagnostics = duplicate_ctx.diagnostics().lock().unwrap();
-  if !diagnostics.is_empty() {
-    for d in diagnostics.iter() {
-      println!();
-      println!("{}", d);
-    }
-    println!();
-    println!(
-      "{} - found {} problem[s]",
-      "results".red().bold(),
-      diagnostics.len()
-    );
-  }
+  let duplicate_diagnostics = duplicate_ctx.diagnostics().lock().unwrap();
+  let formatter_diagnostics = formatter_ctx.diagnostics().lock().unwrap();
+  let linter_diagnostics = linter_ctx.diagnostics().lock().unwrap();
+  let structure_diagnostics = structure_ctx.diagnostics().lock().unwrap();
 
-  let diagnostics = formatter_ctx.diagnostics().lock().unwrap();
-  if !diagnostics.is_empty() {
-    for d in diagnostics.iter() {
-      println!();
-      println!("{}", d);
+  if !duplicate_diagnostics.is_empty()
+    || !formatter_diagnostics.is_empty()
+    || !linter_diagnostics.is_empty()
+    || !structure_diagnostics.is_empty()
+  {
+    for diag in duplicate_diagnostics.iter() {
+      println!("\n{}", diag);
     }
-    println!();
-    println!(
-      "{} - found {} problem[s]",
-      "results".red().bold(),
-      diagnostics.len()
-    );
-  }
+    for diag in formatter_diagnostics.iter() {
+      println!("\n{}", diag);
+    }
+    for diag in linter_diagnostics.iter() {
+      println!("\n{}", diag);
+    }
+    for diag in structure_diagnostics.iter() {
+      println!("\n{}", diag);
+    }
 
-  let diagnostics = linter_ctx.diagnostics().lock().unwrap();
-  if !diagnostics.is_empty() {
-    for d in diagnostics.iter() {
-      println!();
-      println!("{}", d);
-    }
     println!();
     println!(
       "{} - found {} problem[s]",
       "results".red().bold(),
-      diagnostics.len()
-    );
-  }
-
-  let diagnostics = structure_ctx.diagnostics().lock().unwrap();
-  if !diagnostics.is_empty() {
-    for d in diagnostics.iter() {
-      println!();
-      println!("{}", d);
-    }
-    println!();
-    println!(
-      "{} - found {} problem[s]",
-      "results".red().bold(),
-      diagnostics.len()
+      duplicate_diagnostics.len()
+        + formatter_diagnostics.len()
+        + linter_diagnostics.len()
+        + structure_diagnostics.len()
     );
   }
 }
