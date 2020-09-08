@@ -40,6 +40,6 @@ impl Diagnostic for StructureDiagnostic {
     &self.code
   }
   fn scope(&self) -> &'static str {
-    "lint"
+    "structure"
   }
 }
