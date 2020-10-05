@@ -1,4 +1,9 @@
-# ide
+# OS files
+.DS_Store
+.cache
+
+# IDE
+.vscode
 .idea
 
 # rust build
