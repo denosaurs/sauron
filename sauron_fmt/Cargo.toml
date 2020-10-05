@@ -9,7 +9,7 @@ edition = "2018"
 
 [dependencies]
 sauron_core = { path = "../sauron_core" }
-dprint-plugin-typescript = "0.30.3"
+dprint-plugin-typescript = "0.32.2"
 serde = "1.0"
 colored = "2"
 diff = "0.1.12"

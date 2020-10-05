@@ -8,9 +8,9 @@ authors = ["Filippo Rossi", "Elias Sjögreen"]
 edition = "2018"
 
 [dependencies]
-swc_atoms = "0.2"
-swc_common = "=0.10.2"
-swc_ecmascript = { version = "=0.7.0", features = ["parser", "visit"] }
 sauron_core = { path = "../sauron_core" }
 serde = "1.0"
 colored = "2"
+swc_atoms = "0.2"
+swc_common = "=0.10.3"
+swc_ecmascript = { version = "=0.8.3", features = ["parser", "visit"] }

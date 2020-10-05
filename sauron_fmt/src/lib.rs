@@ -2,6 +2,8 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use dprint_plugin_typescript as dprint;
+use dprint::configuration::ConfigurationBuilder;
+use dprint::configuration::Configuration;
 
 use sauron_core::diagnostic::FileLocation;
 use sauron_core::rule::Rule;
@@ -24,13 +26,12 @@ fn is_supported(path: &Path) -> bool {
   }
 }
 
-fn get_config() -> dprint::configuration::Configuration {
-  use dprint::configuration::*;
+fn get_config() -> Configuration {
   ConfigurationBuilder::new().deno().build()
 }
 
 pub struct Formatter {
-  formatter: dprint::Formatter,
+  config: Configuration
 }
 
 impl Rule<FmtContext> for Formatter {
@@ -42,7 +43,7 @@ impl Rule<FmtContext> for Formatter {
     _root: bool,
   ) {
     if is_supported(path) {
-      let r = self.formatter.format_text(path, &data);
+      let r = dprint::format_text(path, &data, &self.config);
 
       match r {
         Ok(f) => {
@@ -67,7 +68,7 @@ impl Rule<FmtContext> for Formatter {
 impl Default for Formatter {
   fn default() -> Self {
     Formatter {
-      formatter: dprint::Formatter::new(get_config()),
+      config: get_config(),
     }
   }
 }

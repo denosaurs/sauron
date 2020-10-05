@@ -1,10 +1,10 @@
 [workspace]
 
 members = [
-    "sauron_cli",
-    "sauron_core",
-    "sauron_duplicate",
-    "sauron_fmt",
-    "sauron_lint",
-    "sauron_structure",
+  "sauron_cli",
+  "sauron_core",
+  "sauron_duplicate",
+  "sauron_fmt",
+  "sauron_lint",
+  "sauron_structure",
 ]

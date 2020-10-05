@@ -15,7 +15,7 @@ use sauron_structure::{rules, StructureContext};
 fn main() {
   let matches = app_from_crate!()
     .arg(
-      Arg::with_name("directory")
+      Arg::new("directory")
         .about("Root directory of the module")
         .required(true)
         .index(1),
