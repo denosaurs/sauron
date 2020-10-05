@@ -1,9 +1,9 @@
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use dprint_plugin_typescript as dprint;
-use dprint::configuration::ConfigurationBuilder;
 use dprint::configuration::Configuration;
+use dprint::configuration::ConfigurationBuilder;
+use dprint_plugin_typescript as dprint;
 
 use sauron_core::diagnostic::FileLocation;
 use sauron_core::rule::Rule;
@@ -31,7 +31,7 @@ fn get_config() -> Configuration {
 }
 
 pub struct Formatter {
-  config: Configuration
+  config: Configuration,
 }
 
 impl Rule<FmtContext> for Formatter {
