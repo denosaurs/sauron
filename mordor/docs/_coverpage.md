@@ -1,14 +1,11 @@
-<div align="center">
+# Sauron <small>1.0.0</small>
 
-  <h1>sauron</h1>
+> Generate quality metrics for deno modules.
 
-  <p>
-    <strong>Generate quality metrics for deno modules.</strong>
-  </p>
-
-<sub>Built with 🦀 by <a href="https://denosaurs.land/">The Denosaurs Team</a></sub>
+Built with 🦀 by <a href="https://denosaurs.land/">The Denosaurs Team</a>
 
 [![CI Status](https://img.shields.io/github/workflow/status/denosaurs/sauron/checks)](https://github.com/denosaurs/sauron/actions)
 [![License](https://img.shields.io/github/license/denosaurs/sauron)](https://github.com/denosaurs/sauron/blob/master/LICENSE)
 
-</div>
+[GitHub](https://github.com/denosaurs/sauron/)
+[Getting Started](#sauron)

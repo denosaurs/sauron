@@ -1,7 +1,5 @@
 <div align="center">
-
-  <h1>sauron</h1>
-
+  <h1 id="sauron">sauron</h1>
   <p>
     <strong>Generate quality metrics for deno modules.</strong>
   </p>
