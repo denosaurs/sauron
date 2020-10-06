@@ -1,0 +1,13 @@
+[package]
+name = "index"
+version = "0.0.0"
+authors = ["Elias Sjögreen"]
+edition = "2018"
+
+[dependencies]
+http = "0.1"
+now_lambda = "*"
+
+[lib]
+name = "util"
+path = "_util.rs"
