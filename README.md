@@ -20,10 +20,6 @@
 
 ## Other
 
-### Related
-
-- [mordor](https://github.com/denosaurs/mordor) - provides module quality metrics as an api
-
 ### Contribution
 
 Pull request, issues and feedback are very welcome. Code style is formatted with `cargo fmt` and commit messages are done following Conventional Commits spec.
