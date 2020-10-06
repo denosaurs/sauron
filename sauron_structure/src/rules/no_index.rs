@@ -5,8 +5,6 @@ use sauron_core::{diagnostic::DiagnosticLevel, rule::Rule};
 
 use crate::StructureContext;
 
-use super::StructureRule;
-
 pub struct NoIndex;
 
 impl Rule<StructureContext> for NoIndex {
@@ -27,7 +25,7 @@ impl Rule<StructureContext> for NoIndex {
       Some("index.ts") => {
         ctx.add(
           DiagnosticLevel::Recommended,
-          "NoIndex",
+          "no-index",
           "No `index.ts` file allowed in root directory",
           path,
         );
@@ -35,10 +33,11 @@ impl Rule<StructureContext> for NoIndex {
       _ => {}
     }
   }
-}
-
-impl StructureRule for NoIndex {
   fn new() -> Box<Self> {
     Box::new(NoIndex)
+  }
+
+  fn code(&self) -> &'static str {
+    "no-index"
   }
 }

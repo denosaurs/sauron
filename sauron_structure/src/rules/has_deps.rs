@@ -5,8 +5,6 @@ use sauron_core::{diagnostic::DiagnosticLevel, rule::Rule};
 
 use crate::StructureContext;
 
-use super::StructureRule;
-
 pub struct HasDeps;
 
 impl Rule<StructureContext> for HasDeps {
@@ -29,10 +27,11 @@ impl Rule<StructureContext> for HasDeps {
       );
     }
   }
-}
-
-impl StructureRule for HasDeps {
   fn new() -> Box<Self> {
     Box::new(HasDeps)
+  }
+
+  fn code(&self) -> &'static str {
+    "has-deps"
   }
 }

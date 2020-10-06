@@ -5,8 +5,6 @@ use sauron_core::{diagnostic::DiagnosticLevel, rule::Rule};
 
 use crate::StructureContext;
 
-use super::StructureRule;
-
 pub struct HasMod;
 
 impl Rule<StructureContext> for HasMod {
@@ -29,10 +27,11 @@ impl Rule<StructureContext> for HasMod {
       );
     }
   }
-}
-
-impl StructureRule for HasMod {
   fn new() -> Box<Self> {
     Box::new(HasMod)
+  }
+
+  fn code(&self) -> &'static str {
+    "has-mod"
   }
 }

@@ -3,7 +3,6 @@ use std::{path::PathBuf, sync::Arc};
 
 use sauron_core::{diagnostic::DiagnosticLevel, rule::Rule};
 
-use super::StructureRule;
 use crate::StructureContext;
 
 pub struct HasReadme;
@@ -28,10 +27,11 @@ impl Rule<StructureContext> for HasReadme {
       );
     }
   }
-}
-
-impl StructureRule for HasReadme {
   fn new() -> Box<Self> {
     Box::new(HasReadme)
+  }
+
+  fn code(&self) -> &'static str {
+    "has-readme"
   }
 }

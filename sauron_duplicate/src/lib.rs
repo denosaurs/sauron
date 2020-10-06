@@ -67,6 +67,14 @@ impl Rule<DuplicateContext> for Duplicate {
       ctx.add_diagnostic(left, right)
     }
   }
+
+  fn new() -> Box<Self> {
+    Box::new(Duplicate::default())
+  }
+
+  fn code(&self) -> &'static str {
+    "no-copy-paste"
+  }
 }
 
 impl Default for Duplicate {

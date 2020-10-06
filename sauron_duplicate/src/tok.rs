@@ -84,7 +84,7 @@ pub fn hash(token: &Token) -> u64 {
       a.hash(&mut hasher);
       b.hash(&mut hasher)
     }
-    Token::Num(_) => "NUM".hash(&mut hasher), // check later, f32 is not an hashble value
+    Token::Num(_) => "NUM".hash(&mut hasher), // check later, f32 cannot be hashed
     Token::BigInt(i) => {
       "BG".hash(&mut hasher);
       i.hash(&mut hasher)

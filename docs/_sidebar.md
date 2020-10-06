@@ -1,0 +1,5 @@
+- Rules
+  - [Structure](structure.md "Sauron - Rules:Structure")
+  - [Linter](linter.md "Sauron - Rules:Linter")
+  - [Format](format.md "Sauron - Rules:Format")
+  - [Duplicate](duplicate.md "Sauron - Rules:Duplicate")

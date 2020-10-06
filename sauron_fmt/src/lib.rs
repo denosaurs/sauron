@@ -6,6 +6,7 @@ use dprint::configuration::ConfigurationBuilder;
 use dprint_plugin_typescript as dprint;
 
 use sauron_core::diagnostic::FileLocation;
+use sauron_core::files::MediaType;
 use sauron_core::rule::Rule;
 
 mod context;
@@ -15,14 +16,14 @@ mod diagnostic;
 use diagnostic::FmtDiagnostic;
 
 fn is_supported(path: &Path) -> bool {
-  let lowercase_ext = path
-    .extension()
-    .and_then(|e| e.to_str())
-    .map(|e| e.to_lowercase());
-  if let Some(ext) = lowercase_ext {
-    ext == "ts" || ext == "tsx" || ext == "js" || ext == "jsx" || ext == "mjs"
-  } else {
-    false
+  match MediaType::from(path) {
+    MediaType::JavaScript => true,
+    MediaType::JSX => true,
+    MediaType::TypeScript => true,
+    MediaType::TSX => true,
+    MediaType::Json => false,
+    MediaType::Wasm => false,
+    MediaType::Unknown => false,
   }
 }
 
@@ -62,6 +63,17 @@ impl Rule<FmtContext> for Formatter {
         }
       }
     }
+  }
+
+  fn new() -> Box<Self>
+  where
+    Self: Sized,
+  {
+    Box::new(Formatter::default())
+  }
+
+  fn code(&self) -> &'static str {
+    "fmt"
   }
 }
 

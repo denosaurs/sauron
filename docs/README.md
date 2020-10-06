@@ -1,6 +1,6 @@
 <div align="center">
 
-  <h1><code>sauron</code></h1>
+  <h1>sauron</h1>
 
   <p>
     <strong>Generate quality metrics for deno modules.</strong>
@@ -13,16 +13,12 @@
 
 </div>
 
-## Maintainers
+## Maintainers <!-- {docsify-ignore} -->
 
 - Elias Sjögreen ([@eliassjogreen](https://github.com/eliassjogreen))
 - Filippo Rossi ([@qu4k](https://github.com/qu4k))
 
-## Other
-
-### Related
-
-- [mordor](https://github.com/denosaurs/mordor) - provides module quality metrics as an api
+## Other <!-- {docsify-ignore} -->
 
 ### Contribution
 

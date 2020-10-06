@@ -4,7 +4,7 @@ use std::process::exit;
 
 use clap::{app_from_crate, Arg};
 use colored::*;
-use walkdir::WalkDir;
+use jwalk::WalkDir;
 
 use sauron_core::{context::Context, rule::Rule};
 use sauron_duplicate::{Duplicate, DuplicateContext};
@@ -38,19 +38,19 @@ fn main() {
   let structure_rules = rules::get_all_rules();
   let structure_ctx = StructureContext::default();
 
-  let formatter_rule = Formatter::default();
+  let formatter_rule = Formatter::new();
   let formatter_ctx = FmtContext::default();
 
-  let linter_rule = Linter::default();
+  let linter_rule = Linter::new();
   let linter_ctx = LintContext::default();
 
-  let duplicate_rule = Duplicate::default();
+  let duplicate_rule = Duplicate::new();
   let duplicate_ctx = DuplicateContext::default();
 
   let walk = WalkDir::new(&root_dir);
   for entry in walk {
     if let Ok(entry) = entry {
-      let path = &entry.into_path();
+      let path = &entry.path();
       let root = path.parent().unwrap() == root_dir.as_path();
 
       for structure_rule in &structure_rules {

@@ -6,18 +6,6 @@ use sauron_core::diagnostic::{DiagnosticLevel, Location};
 
 use crate::diagnostic::StructureDiagnostic;
 
-// TODO(divy-work): Remove this macro when all_rules is used
-#[allow(dead_code)]
-pub struct StructureConfig {
-  all_rules: bool,
-}
-
-impl Default for StructureConfig {
-  fn default() -> Self {
-    Self { all_rules: false }
-  }
-}
-
 pub struct StructureContext {
   diagnostics: Arc<Mutex<Vec<StructureDiagnostic>>>,
   flags: Arc<Mutex<HashMap<String, bool>>>,

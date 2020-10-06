@@ -7,8 +7,6 @@ use sauron_core::{diagnostic::DiagnosticLevel, rule::Rule};
 
 use crate::StructureContext;
 
-use super::StructureRule;
-
 pub struct SnakeCase;
 
 impl Rule<StructureContext> for SnakeCase {
@@ -37,10 +35,11 @@ impl Rule<StructureContext> for SnakeCase {
       }
     }
   }
-}
-
-impl StructureRule for SnakeCase {
   fn new() -> Box<Self> {
     Box::new(SnakeCase)
+  }
+
+  fn code(&self) -> &'static str {
+    "snake-case"
   }
 }

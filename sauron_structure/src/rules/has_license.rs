@@ -5,8 +5,6 @@ use sauron_core::{diagnostic::DiagnosticLevel, rule::Rule};
 
 use crate::StructureContext;
 
-use super::StructureRule;
-
 pub struct HasLicense;
 
 impl Rule<StructureContext> for HasLicense {
@@ -29,10 +27,12 @@ impl Rule<StructureContext> for HasLicense {
       );
     }
   }
-}
 
-impl StructureRule for HasLicense {
   fn new() -> Box<Self> {
     Box::new(HasLicense)
+  }
+
+  fn code(&self) -> &'static str {
+    "has-license"
   }
 }
