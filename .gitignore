@@ -7,7 +7,7 @@
 .idea
 
 # rust build
-/target
+target
 
 # repos
 /tests
