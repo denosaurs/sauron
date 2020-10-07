@@ -6,5 +6,9 @@ members = [
   "sauron_duplicate",
   "sauron_fmt",
   "sauron_lint",
-  "sauron_structure",
+  "sauron_structure"
+]
+
+exclude = [
+  "mordor/api"
 ]
