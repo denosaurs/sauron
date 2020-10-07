@@ -1,3 +1,3 @@
 # Structure Rules
 
-## has_deps
+## has-deps

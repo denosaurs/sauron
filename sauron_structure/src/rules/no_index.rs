@@ -1,5 +1,5 @@
-use std::{path::PathBuf, sync::Arc};
 use std::ffi::OsStr;
+use std::{path::PathBuf, sync::Arc};
 
 use sauron_core::{diagnostic::DiagnosticLevel, rule::Rule};
 
@@ -40,6 +40,6 @@ impl Rule<StructureContext> for NoIndex {
     "no-index"
   }
   fn docs(&self) -> &'static str {
-    "https://mordor.land/#/structure?id=no_index"
+    "https://mordor.land/#/structure?id=no-index"
   }
 }

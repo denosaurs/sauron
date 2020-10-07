@@ -1,5 +1,5 @@
-use std::{path::PathBuf, sync::Arc};
 use std::ffi::OsStr;
+use std::{path::PathBuf, sync::Arc};
 
 use sauron_core::{diagnostic::DiagnosticLevel, rule::Rule};
 
@@ -34,6 +34,6 @@ impl Rule<StructureContext> for HasDeps {
     "has-deps"
   }
   fn docs(&self) -> &'static str {
-    "https://mordor.land/#/structure?id=has_deps"
+    "https://mordor.land/#/structure?id=has-deps"
   }
 }

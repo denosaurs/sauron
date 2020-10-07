@@ -2,8 +2,8 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use deno_lint::linter::LinterBuilder;
-use deno_lint::rules::{get_all_rules, get_recommended_rules};
 use deno_lint::rules::LintRule;
+use deno_lint::rules::{get_all_rules, get_recommended_rules};
 use swc_ecmascript::parser::Syntax;
 
 pub use context::LintContext;

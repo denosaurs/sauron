@@ -1,5 +1,5 @@
-use std::{path::PathBuf, sync::Arc};
 use std::ffi::OsStr;
+use std::{path::PathBuf, sync::Arc};
 
 use sauron_core::{diagnostic::DiagnosticLevel, rule::Rule};
 
@@ -36,6 +36,6 @@ impl Rule<StructureContext> for HasReadme {
   }
 
   fn docs(&self) -> &'static str {
-    "https://mordor.land/#/structure?id=has_readme"
+    "https://mordor.land/#/structure?id=has-readme"
   }
 }
