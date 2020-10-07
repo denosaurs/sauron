@@ -1,6 +1,7 @@
+pub use context::StructureContext;
+
 mod context;
 
 pub mod rules;
-pub use context::StructureContext;
 
 mod diagnostic;

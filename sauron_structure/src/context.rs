@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
-use sauron_core::diagnostic::{DiagnosticLevel, Location};
 use sauron_core::{context::Context, rule::Rule};
+use sauron_core::diagnostic::{DiagnosticLevel, Location};
 
 use crate::diagnostic::StructureDiagnostic;
 

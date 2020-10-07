@@ -1,5 +1,5 @@
-use std::ffi::OsStr;
 use std::{path::PathBuf, sync::Arc};
+use std::ffi::OsStr;
 
 use regex::Regex;
 

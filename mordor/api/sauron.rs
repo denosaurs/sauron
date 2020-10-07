@@ -1,20 +1,20 @@
-use util::print_foo;
-use http::{StatusCode};
-use now_lambda::{lambda, error::NowError, IntoResponse, Request, Response};
+use http::StatusCode;
+use now_lambda::{error::NowError, IntoResponse, lambda, Request, Response};
 use std::error::Error;
+use util::print_foo;
 
 fn handler(_: Request) -> Result<impl IntoResponse, NowError> {
-	print_foo();
-	let response = Response::builder()
-		.status(StatusCode::OK)
-		.header("Content-Type", "text/plain")
-		.body("user endpoint")
-		.expect("Internal Server Error");
+  print_foo();
+  let response = Response::builder()
+    .status(StatusCode::OK)
+    .header("Content-Type", "text/plain")
+    .body("user endpoint")
+    .expect("Internal Server Error");
 
-		Ok(response)
+  Ok(response)
 }
 
 // Start the runtime with the handler
 fn main() -> Result<(), Box<dyn Error>> {
-	Ok(lambda!(handler))
+  Ok(lambda!(handler))
 }

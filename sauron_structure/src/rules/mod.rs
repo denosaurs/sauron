@@ -1,5 +1,6 @@
-use crate::StructureContext;
 use sauron_core::rule::Rule;
+
+use crate::StructureContext;
 
 mod has_deps;
 mod has_license;

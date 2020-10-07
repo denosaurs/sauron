@@ -1,5 +1,6 @@
-use crate::media::MediaType;
 use swc_ecmascript::parser::{EsConfig, Syntax, TsConfig};
+
+use crate::media::MediaType;
 
 fn get_default_es_config() -> EsConfig {
   let mut config = EsConfig::default();

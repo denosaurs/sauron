@@ -1,8 +1,8 @@
 use std::fmt;
 
+use colored::*;
 use serde::Serialize;
 
-use colored::*;
 use sauron_core::diagnostic::{Diagnostic, DiagnosticLevel, Location};
 
 #[derive(Clone, Serialize)]

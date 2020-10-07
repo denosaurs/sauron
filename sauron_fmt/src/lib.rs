@@ -5,11 +5,11 @@ use dprint::configuration::Configuration;
 use dprint::configuration::ConfigurationBuilder;
 use dprint_plugin_typescript as dprint;
 
+pub use context::FmtContext;
 use sauron_core::media::MediaType;
 use sauron_core::rule::Rule;
 
 mod context;
-pub use context::FmtContext;
 
 mod diagnostic;
 
