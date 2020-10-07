@@ -19,20 +19,21 @@ impl Rule<StructureContext> for HasLicense {
 
   fn check_context(&self, ctx: Arc<StructureContext>, root_dir: &PathBuf) {
     if !ctx.get_flag("has_license") {
-      ctx.add(
+      ctx.add_diagnostic(
+        self,
         DiagnosticLevel::Recommended,
-        "has-license",
         "The module should have a `LICENSE` file in the root directory",
         root_dir,
       );
     }
   }
-
   fn new() -> Box<Self> {
     Box::new(HasLicense)
   }
-
   fn code(&self) -> &'static str {
     "has-license"
+  }
+  fn docs(&self) -> &'static str {
+    "https://mordor.land/#/structure?id=has_license"
   }
 }

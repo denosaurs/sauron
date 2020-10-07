@@ -10,7 +10,7 @@ use swc_ecmascript::parser::Syntax;
 
 pub use context::DuplicateContext;
 use sauron_core::{
-  diagnostic::FileLocation, error::SauronCoreError, files::MediaType,
+  diagnostic::FileLocation, error::SauronCoreError, media::MediaType,
   rule::Rule, syntax,
 };
 
@@ -64,7 +64,7 @@ impl Rule<DuplicateContext> for Duplicate {
         self.source_map.lookup_char_pos(dupe.left.start.lo).into();
       let right: FileLocation =
         self.source_map.lookup_char_pos(dupe.right.start.lo).into();
-      ctx.add_diagnostic(left, right)
+      ctx.add_diagnostic(self, left, right)
     }
   }
 
@@ -74,6 +74,9 @@ impl Rule<DuplicateContext> for Duplicate {
 
   fn code(&self) -> &'static str {
     "no-copy-paste"
+  }
+  fn docs(&self) -> &'static str {
+    "https://mordor.land/#/duplicate"
   }
 }
 

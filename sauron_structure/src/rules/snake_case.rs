@@ -26,9 +26,9 @@ impl Rule<StructureContext> for SnakeCase {
       let re = Regex::new(r"^[a-z0-9_]+\..*$").unwrap();
 
       if !re.is_match(file_name) {
-        ctx.add(
+        ctx.add_diagnostic(
+          self,
           DiagnosticLevel::Recommended,
-          "snake-case",
           "All source files must use snake case",
           path,
         );
@@ -38,8 +38,10 @@ impl Rule<StructureContext> for SnakeCase {
   fn new() -> Box<Self> {
     Box::new(SnakeCase)
   }
-
   fn code(&self) -> &'static str {
     "snake-case"
+  }
+  fn docs(&self) -> &'static str {
+    "https://mordor.land/#/structure?id=snake_case"
   }
 }

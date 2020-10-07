@@ -14,6 +14,7 @@ pub struct LintDiagnostic {
   pub location: Location,
   pub message: String,
   pub code: String,
+  pub docs: String,
 }
 
 impl fmt::Display for LintDiagnostic {
@@ -21,11 +22,12 @@ impl fmt::Display for LintDiagnostic {
     f.write_fmt(format_args!(
       "{} ({}): {}",
       self.level,
-      format!("{}:{}", self.scope(), self.code.clone()).white(),
+      format!("{}:{}", self.scope(), self.code.clone()).dimmed(),
       self.message,
     ))?;
     f.write_str("\n")?;
-    f.write_fmt(format_args!("  {} {}", "-->".white(), self.location))
+    f.write_fmt(format_args!("  {} {}\n", "-->".dimmed(), self.location))?;
+    f.write_fmt(format_args!("  {} {}", "~".dimmed(), self.docs.dimmed()))
   }
 }
 
@@ -57,8 +59,9 @@ impl From<DLintDiagnostic> for LintDiagnostic {
         line: Some(diag.range.start.line),
         col: Some(diag.range.start.col),
       }),
-      code: diag.code,
       message: diag.message,
+      code: diag.code.clone(),
+      docs: format!("https://mordor.land/#/linter?id={}", diag.code),
     }
   }
 }

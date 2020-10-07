@@ -5,15 +5,13 @@ use dprint::configuration::Configuration;
 use dprint::configuration::ConfigurationBuilder;
 use dprint_plugin_typescript as dprint;
 
-use sauron_core::diagnostic::FileLocation;
-use sauron_core::files::MediaType;
+use sauron_core::media::MediaType;
 use sauron_core::rule::Rule;
 
 mod context;
 pub use context::FmtContext;
 
 mod diagnostic;
-use diagnostic::FmtDiagnostic;
 
 fn is_supported(path: &Path) -> bool {
   match MediaType::from(path) {
@@ -49,13 +47,7 @@ impl Rule<FmtContext> for Formatter {
       match r {
         Ok(f) => {
           if f != data {
-            let file: FileLocation = FileLocation {
-              path: path.to_path_buf(),
-              line: None,
-              col: None,
-            };
-
-            ctx.add_diagnostic(FmtDiagnostic { file });
+            ctx.add_diagnostic(self, path);
           }
         }
         Err(e) => {
@@ -64,16 +56,14 @@ impl Rule<FmtContext> for Formatter {
       }
     }
   }
-
-  fn new() -> Box<Self>
-  where
-    Self: Sized,
-  {
+  fn new() -> Box<Self> {
     Box::new(Formatter::default())
   }
-
   fn code(&self) -> &'static str {
-    "fmt"
+    "unformatted-file"
+  }
+  fn docs(&self) -> &'static str {
+    "https://mordor.land/#/format"
   }
 }
 

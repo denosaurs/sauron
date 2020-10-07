@@ -15,17 +15,17 @@ impl Rule<StructureContext> for NoIndex {
 
     match path.file_name().and_then(OsStr::to_str) {
       Some("index.js") => {
-        ctx.add(
+        ctx.add_diagnostic(
+          self,
           DiagnosticLevel::Recommended,
-          "no-index",
           "No `index.js` file allowed in root directory",
           path,
         );
       }
       Some("index.ts") => {
-        ctx.add(
+        ctx.add_diagnostic(
+          self,
           DiagnosticLevel::Recommended,
-          "no-index",
           "No `index.ts` file allowed in root directory",
           path,
         );
@@ -36,8 +36,10 @@ impl Rule<StructureContext> for NoIndex {
   fn new() -> Box<Self> {
     Box::new(NoIndex)
   }
-
   fn code(&self) -> &'static str {
     "no-index"
+  }
+  fn docs(&self) -> &'static str {
+    "https://mordor.land/#/structure?id=no_index"
   }
 }

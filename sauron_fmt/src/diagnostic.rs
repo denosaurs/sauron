@@ -10,6 +10,8 @@ use sauron_core::diagnostic::{
 #[derive(Clone, Serialize)]
 pub struct FmtDiagnostic {
   pub file: FileLocation,
+  pub code: String,
+  pub docs: String,
 }
 
 impl fmt::Display for FmtDiagnostic {
@@ -17,11 +19,12 @@ impl fmt::Display for FmtDiagnostic {
     f.write_fmt(format_args!(
       "{} ({}): {}\n",
       self.level(),
-      format!("{}:{}", self.scope(), self.code()).white(),
+      format!("{}:{}", self.scope(), self.code()).dimmed(),
       self.short_message(),
     ))?;
     f.write_str("\n")?;
-    f.write_fmt(format_args!("  {} {}", "-->".white(), self.file))
+    f.write_fmt(format_args!("  {} {}\n", "-->".dimmed(), self.file))?;
+    f.write_fmt(format_args!("  {} {}", "~".dimmed(), self.docs.dimmed()))
   }
 }
 
@@ -36,7 +39,7 @@ impl Diagnostic for FmtDiagnostic {
     "unformatted file"
   }
   fn code(&self) -> &str {
-    "unformatted-file"
+    &self.code
   }
   fn scope(&self) -> &'static str {
     "fmt"

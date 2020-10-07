@@ -4,7 +4,7 @@ use std::{
   sync::{Arc, Mutex},
 };
 
-use sauron_core::{context::Context, diagnostic::FileLocation};
+use sauron_core::{context::Context, diagnostic::FileLocation, rule::Rule};
 
 use crate::{diagnostic::DuplicateDiagnostic, tok::Tok};
 
@@ -26,9 +26,19 @@ pub struct DuplicateContext {
 }
 
 impl DuplicateContext {
-  pub fn add_diagnostic(&self, left: FileLocation, right: FileLocation) {
+  pub fn add_diagnostic(
+    &self,
+    rule: &impl Rule<DuplicateContext>,
+    left: FileLocation,
+    right: FileLocation,
+  ) {
     let mut diagnostics = self.diagnostics.lock().unwrap();
-    diagnostics.push(DuplicateDiagnostic { left, right });
+    diagnostics.push(DuplicateDiagnostic {
+      left,
+      right,
+      code: rule.code().to_string(),
+      docs: rule.docs().to_string(),
+    });
   }
 
   pub fn add_tokens(&self, path_buf: PathBuf, tokens: Vec<Tok>) {

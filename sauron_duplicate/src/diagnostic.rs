@@ -11,6 +11,8 @@ use sauron_core::diagnostic::{
 pub struct DuplicateDiagnostic {
   pub right: FileLocation,
   pub left: FileLocation,
+  pub code: String,
+  pub docs: String,
 }
 
 impl fmt::Display for DuplicateDiagnostic {
@@ -18,11 +20,12 @@ impl fmt::Display for DuplicateDiagnostic {
     f.write_fmt(format_args!(
       "{} ({}): {}\n",
       self.level(),
-      format!("{}:{}", self.scope(), self.code()).white(),
+      format!("{}:{}", self.scope(), self.code).dimmed(),
       self.short_message(),
     ))?;
-    f.write_fmt(format_args!("  {} {}\n", "-->".white(), self.left))?;
-    f.write_fmt(format_args!("  {} {}\n", "-->".white(), self.right))
+    f.write_fmt(format_args!("  {} {}\n", "-->".dimmed(), self.left))?;
+    f.write_fmt(format_args!("  {} {}\n", "-->".dimmed(), self.right))?;
+    f.write_fmt(format_args!("  {} {}", "~".dimmed(), self.docs.dimmed()))
   }
 }
 
@@ -37,7 +40,7 @@ impl Diagnostic for DuplicateDiagnostic {
     "cannot have chunks of duplicate code"
   }
   fn code(&self) -> &str {
-    "no-copy-paste"
+    &self.code
   }
   fn scope(&self) -> &'static str {
     "duplicate"

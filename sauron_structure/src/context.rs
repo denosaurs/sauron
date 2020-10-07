@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
-use sauron_core::context::Context;
 use sauron_core::diagnostic::{DiagnosticLevel, Location};
+use sauron_core::{context::Context, rule::Rule};
 
 use crate::diagnostic::StructureDiagnostic;
 
@@ -12,21 +12,18 @@ pub struct StructureContext {
 }
 
 impl StructureContext {
-  pub fn add_diagnostic(&self, diagnostic: StructureDiagnostic) {
-    let mut diagnostics = self.diagnostics.lock().unwrap();
-    diagnostics.push(diagnostic);
-  }
-  pub fn add(
+  pub fn add_diagnostic(
     &self,
+    rule: &impl Rule<StructureContext>,
     level: DiagnosticLevel,
-    code: &str,
     message: &str,
     path: &std::path::PathBuf,
   ) {
     let mut diagnostics = self.diagnostics.lock().unwrap();
     diagnostics.push(StructureDiagnostic {
       level,
-      code: code.to_string(),
+      code: rule.code().to_string(),
+      docs: rule.docs().to_string(),
       message: message.to_string(),
       location: Location::Directory(path.to_owned()),
     });

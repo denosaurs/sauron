@@ -19,9 +19,9 @@ impl Rule<StructureContext> for HasReadme {
 
   fn check_context(&self, ctx: Arc<StructureContext>, root_dir: &PathBuf) {
     if !ctx.get_flag("has_readme") {
-      ctx.add(
+      ctx.add_diagnostic(
+        self,
         DiagnosticLevel::Required,
-        "has-readme",
         "The module should have a `README.md` file in the root directory",
         root_dir,
       );
@@ -33,5 +33,9 @@ impl Rule<StructureContext> for HasReadme {
 
   fn code(&self) -> &'static str {
     "has-readme"
+  }
+
+  fn docs(&self) -> &'static str {
+    "https://mordor.land/#/structure?id=has_readme"
   }
 }

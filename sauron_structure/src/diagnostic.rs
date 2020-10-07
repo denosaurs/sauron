@@ -11,6 +11,7 @@ pub struct StructureDiagnostic {
   pub location: Location,
   pub message: String,
   pub code: String,
+  pub docs: String,
 }
 
 impl fmt::Display for StructureDiagnostic {
@@ -18,11 +19,12 @@ impl fmt::Display for StructureDiagnostic {
     f.write_fmt(format_args!(
       "{} ({}): {}",
       self.level,
-      format!("{}:{}", self.scope(), self.code.clone()).white(),
+      format!("{}:{}", self.scope(), self.code.clone()).dimmed(),
       self.message,
     ))?;
     f.write_str("\n")?;
-    f.write_fmt(format_args!("  {} {}", "-->".white(), self.location))
+    f.write_fmt(format_args!("  {} {}\n", "-->".dimmed(), self.location))?;
+    f.write_fmt(format_args!("  {} {}", "~".dimmed(), self.docs.dimmed()))
   }
 }
 

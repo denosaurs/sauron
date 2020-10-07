@@ -19,9 +19,9 @@ impl Rule<StructureContext> for HasMod {
 
   fn check_context(&self, ctx: Arc<StructureContext>, root_dir: &PathBuf) {
     if !ctx.get_flag("has_mod") {
-      ctx.add(
+      ctx.add_diagnostic(
+        self,
         DiagnosticLevel::Recommended,
-        "has-mod",
         "The module should have a `mod.ts` file in the root directory",
         root_dir,
       );
@@ -30,8 +30,10 @@ impl Rule<StructureContext> for HasMod {
   fn new() -> Box<Self> {
     Box::new(HasMod)
   }
-
   fn code(&self) -> &'static str {
     "has-mod"
+  }
+  fn docs(&self) -> &'static str {
+    "https://mordor.land/#/structure?id=has_mod"
   }
 }

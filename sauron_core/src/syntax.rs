@@ -1,4 +1,4 @@
-use crate::files::MediaType;
+use crate::media::MediaType;
 use swc_ecmascript::parser::{EsConfig, Syntax, TsConfig};
 
 fn get_default_es_config() -> EsConfig {

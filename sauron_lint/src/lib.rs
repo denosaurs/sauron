@@ -7,7 +7,7 @@ use deno_lint::rules::{get_all_rules, get_recommended_rules};
 use swc_ecmascript::parser::Syntax;
 
 pub use context::LintContext;
-use sauron_core::{files::MediaType, rule::Rule, syntax};
+use sauron_core::{media::MediaType, rule::Rule, syntax};
 
 pub struct Linter;
 
@@ -64,16 +64,14 @@ impl Rule<LintContext> for Linter {
       }
     }
   }
-
-  fn new() -> Box<Self>
-  where
-    Self: Sized,
-  {
+  fn new() -> Box<Self> {
     Box::new(Linter)
   }
-
   fn code(&self) -> &'static str {
     "linter"
+  }
+  fn docs(&self) -> &'static str {
+    "https://mordor.land/#/linter"
   }
 }
 

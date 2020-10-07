@@ -19,9 +19,9 @@ impl Rule<StructureContext> for HasDeps {
 
   fn check_context(&self, ctx: Arc<StructureContext>, root_dir: &PathBuf) {
     if !ctx.get_flag("has_deps") {
-      ctx.add(
+      ctx.add_diagnostic(
+        self,
         DiagnosticLevel::Recommended,
-        "has-deps",
         "The module should have a `deps.ts` file in the root directory",
         root_dir,
       );
@@ -30,8 +30,10 @@ impl Rule<StructureContext> for HasDeps {
   fn new() -> Box<Self> {
     Box::new(HasDeps)
   }
-
   fn code(&self) -> &'static str {
     "has-deps"
+  }
+  fn docs(&self) -> &'static str {
+    "https://mordor.land/#/structure?id=has_deps"
   }
 }
