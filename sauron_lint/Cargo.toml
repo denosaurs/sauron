@@ -11,5 +11,5 @@ edition = "2018"
 sauron_core = { path = "../sauron_core" }
 serde = "1.0"
 colored = "2"
-deno_lint = "0.2.2"
-swc_ecmascript = { version = "=0.8.3", features = ["parser", "visit"] }
+deno_lint = "0.2.3"
+swc_ecmascript = { version = "=0.9.1", features = ["parser", "visit"] }

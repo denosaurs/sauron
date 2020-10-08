@@ -10,5 +10,6 @@ members = [
 ]
 
 exclude = [
-  "mordor/api"
+  "mordor/api",
+  "sauron_wasm"
 ]

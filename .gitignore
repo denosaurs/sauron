@@ -12,4 +12,8 @@ target
 # repos
 /tests
 
+# vercel
 .vercel
+
+# wasm-pack
+pkg
