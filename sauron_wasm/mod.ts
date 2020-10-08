@@ -9,7 +9,8 @@ await wasm.init(wasm.source);
 wasm.init_panic_hook();
 
 export function sauronCheck(file_tree: Entry & { data: Entry[] }) {
-  return wasm.sauron_check(file_tree);
+  const ret = JSON.parse(wasm.sauron_check(file_tree));
+  return ret;
 }
 
 console.log(
