@@ -30,7 +30,7 @@ async function run(msg: string, cmd: string[]) {
     cmd,
     stderr: "inherit",
     stdin: "null",
-    stdout: "null"
+    stdout: "null",
   });
 
   if (!(await process.status()).success) {
@@ -65,14 +65,14 @@ console.log("inlining wasm in js");
 const source = `import * as lz4 from "https://deno.land/x/lz4@v0.1.2/mod.ts";
                 export const source = lz4.decompress(Uint8Array.from(atob("${encoded}"), c => c.charCodeAt(0)));
                 ${await Deno.readTextFile(`pkg/${name}.js`)}`
-                .replace("async function init", "export async function init")
-                .replace("export default init;", "");
+  .replace("async function init", "export async function init")
+  .replace("export default init;", "");
 
 console.log("minifying js");
 const output = await minify(source, {
   mangle: { module: true },
   output: {
-    preamble: "//deno-fmt-ignore-file",
+    preamble: "// deno-lint-ignore-file\n// deno-fmt-ignore-file",
   },
 });
 
