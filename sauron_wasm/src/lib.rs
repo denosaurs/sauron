@@ -5,6 +5,7 @@ use std::sync::Arc;
 
 use serde::Deserialize;
 use serde::Serialize;
+use serde_json::json;
 
 use sauron_core::{context::Context, rule::Rule};
 use sauron_duplicate::{Duplicate, DuplicateContext};
@@ -70,6 +71,13 @@ pub fn sauron_check(file_tree: &JsValue) -> Option<String> {
 
   let mut diagnostics = Vec::new();
 
+  diagnostics.push(json!({
+    "duplicate_len": duplicate_diagnostics.len(),
+    "formatter_len": formatter_diagnostics.len(),
+    "linter_len": linter_diagnostics.len(),
+    "structure_len": structure_diagnostics.len(),
+  }));
+
   for diag in duplicate_diagnostics.iter() {
     diagnostics.push(serde_json::to_value(diag).unwrap());
   }
@@ -124,9 +132,9 @@ fn check_file_tree(
       for structure_rule in &checkers.structure_rules {
         structure_rule.check_context(ctxs.structure_ctx.clone(), &path);
       }
+
+      checkers.duplicate.check_context(ctxs.duplicate_ctx.clone(), &path);
     }
-    
-    checkers.duplicate.check_context(ctxs.duplicate_ctx.clone(), &path);
   } else if let Entry::File { path, data } = entry {
     let path = PathBuf::from(path);
 
@@ -142,6 +150,6 @@ fn check_file_tree(
       data.clone(),
       root,
     );
-    checkers.linter.check_file(ctxs.linter_ctx.clone(), &path, data, root);
+    // checkers.linter.check_file(ctxs.linter_ctx.clone(), &path, data, root);
   }
 }

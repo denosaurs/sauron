@@ -17,7 +17,6 @@ wee_alloc = { version = "0.4.5", optional = true }
 console_error_panic_hook = "0.1.6"
 serde = "1.0"
 serde_json = "1.0"
-anyhow = "1.0"
 
 sauron_core = { path = "../sauron_core" }
 sauron_duplicate = { path = "../sauron_duplicate" }
