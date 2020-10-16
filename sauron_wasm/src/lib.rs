@@ -71,22 +71,22 @@ pub fn sauron_check(file_tree: &JsValue) -> Option<String> {
   let mut diagnostics = Vec::new();
 
   for diag in duplicate_diagnostics.iter() {
-    diagnostics.push(diag.to_string());
+    diagnostics.push(serde_json::to_value(diag).unwrap());
   }
 
   for diag in formatter_diagnostics.iter() {
-    diagnostics.push(diag.to_string());
+    diagnostics.push(serde_json::to_value(diag).unwrap());
   }
 
   for diag in linter_diagnostics.iter() {
-    diagnostics.push(diag.to_string());
+    diagnostics.push(serde_json::to_value(diag).unwrap());
   }
 
   for diag in structure_diagnostics.iter() {
-    diagnostics.push(diag.to_string());
+    diagnostics.push(serde_json::to_value(diag).unwrap());
   }
-
-  Some(format!("{:?}", diagnostics))
+  
+  Some(serde_json::Value::Array(diagnostics).to_string())
 }
 
 struct Contexts<'a> {
