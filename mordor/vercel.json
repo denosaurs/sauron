@@ -6,7 +6,8 @@
   },
   "build": {
     "env": {
-      "DENO_UNSTABLE": "true"
+      "DENO_UNSTABLE": "true",
+      "DENO_VERSION": "1.4.6"
     }
   }
 }
