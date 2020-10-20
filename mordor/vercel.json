@@ -1,9 +1,12 @@
 {
-  "functions": {
-    "api/**/*.rs": {
-      "runtime": "now-rust@2.0.0",
-      "memory": 3008,
-      "maxDuration": 60
+	"functions": {
+		"api/**/*.[jt]s": {
+      "runtime": "vercel-deno@0.7.1"
+    }
+  },
+  "build": {
+    "env": {
+      "DENO_UNSTABLE": "true"
     }
   }
 }
