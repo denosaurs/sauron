@@ -1,5 +1,5 @@
 import { ServerRequest } from "https://deno.land/std@0.74.0/http/server.ts";
-import { check } from "../../sauron_wasm/mod.ts";
+import { check } from "https://deno.land/x/sauron@0.0.1/mod.ts";
 
 const decoder = new TextDecoder();
 
