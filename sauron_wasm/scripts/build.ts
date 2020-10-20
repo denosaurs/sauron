@@ -38,15 +38,27 @@ async function run(msg: string, cmd: string[]) {
   }
 }
 
-await requires("rustup", "rustc", "cargo", "wasm-pack");
+await requires("rustup", "rustc", "cargo");
 
 if (!(await Deno.stat("Cargo.toml")).isFile) {
   console.error(`the build script should be executed in the "${name}" root`);
 }
 
 await run(
-  "building using wasm-pack",
-  ["wasm-pack", "build", "--target", "web", "--release"],
+  "building using cargo wasi",
+  ["cargo", "wasi", "build", "--release"],
+);
+
+await run(
+  "generating bindings using wasm-bindgen",
+  [
+    "wasm-bindgen",
+    `target/wasm32-wasi/release/${name}.wasm`,
+    "--out-dir",
+    "pkg",
+    "--target",
+    "deno",
+  ],
 );
 
 const wasm = await Deno.readFile(`pkg/${name}_bg.wasm`);
@@ -63,12 +75,26 @@ console.log(
 
 console.log("inlining wasm in js");
 const source = `import * as lz4 from "https://deno.land/x/lz4@v0.1.2/mod.ts";
-                export const source = lz4.decompress(Uint8Array.from(atob("${encoded}"), c => c.charCodeAt(0)));
-                ${await Deno.readTextFile(`pkg/${name}.js`)}`
-  .replace("async function init", "export async function init")
-  .replace("export default init;", "");
+                import Context from "https://deno.land/std@0.74.0/wasi/snapshot_preview1.ts";
+                const source = lz4.decompress(Uint8Array.from(atob("${encoded}"), c => c.charCodeAt(0)));
 
-console.log("minifying js");
+                const context = new Context({});
+                const imports = {
+                  __wbindgen_placeholder__: {},
+                  wasi_snapshot_preview1: context.exports
+                };
+                
+                ${
+                  (await Deno.readTextFile(`pkg/${name}.js`))
+                  .replace(/import \* as import\d from 'wasi_snapshot_preview1'/g, "")
+                  .replace(/const imports = {(?:\n|.)*};/, "")
+                  .replace("const file = new URL(import.meta.url).pathname;", "")
+                  .replace("const wasmFile = file.substring(0, file.lastIndexOf(Deno.build.os === 'windows' ? '\\\\' : '/') + 1) + 'sauron_wasm_bg.wasm';", "")
+                  .replace("const wasmModule = new WebAssembly.Module(Deno.readFileSync(wasmFile));", "const wasmModule = new WebAssembly.Module(source);")}
+                  
+                context.memory = wasm.memory;`;
+
+console.log("minifying wasm");
 const output = await minify(source, {
   mangle: { module: true },
   output: {

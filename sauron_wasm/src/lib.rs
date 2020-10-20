@@ -6,6 +6,7 @@ use std::sync::Arc;
 use serde::Deserialize;
 use serde::Serialize;
 use serde_json::json;
+use serde_json::Value;
 
 use sauron_core::{context::Context, rule::Rule};
 use sauron_duplicate::{Duplicate, DuplicateContext};
@@ -25,17 +26,8 @@ enum Entry {
 }
 
 #[wasm_bindgen]
-pub fn init_panic_hook() {
-  console_error_panic_hook::set_once();
-}
-
-#[wasm_bindgen]
-pub fn sauron_check(file_tree: &JsValue) -> Option<String> {
-  let file_tree = if let Ok(file_tree) = file_tree.into_serde::<Entry>() {
-    file_tree
-  } else {
-    return None;
-  };
+pub fn sauron_check(file_tree: String) -> String {
+  let file_tree: Entry = serde_json::from_str(&file_tree).unwrap();
 
   let duplicate = Duplicate::new();
   let formatter = Formatter::new();
@@ -69,32 +61,14 @@ pub fn sauron_check(file_tree: &JsValue) -> Option<String> {
   let linter_diagnostics = linter_ctx.diagnostics().lock().unwrap();
   let structure_diagnostics = structure_ctx.diagnostics().lock().unwrap();
 
-  let mut diagnostics = Vec::new();
+  let diagnostics = json!({
+    "duplicate": duplicate_diagnostics.iter().map(|diag| serde_json::to_value(diag).unwrap()).collect::<Value>(),
+    "formatter": formatter_diagnostics.iter().map(|diag| serde_json::to_value(diag).unwrap()).collect::<Value>(),
+    "linter":    linter_diagnostics   .iter().map(|diag| serde_json::to_value(diag).unwrap()).collect::<Value>(),
+    "structure": structure_diagnostics.iter().map(|diag| serde_json::to_value(diag).unwrap()).collect::<Value>(),
+  });
 
-  diagnostics.push(json!({
-    "duplicate_len": duplicate_diagnostics.len(),
-    "formatter_len": formatter_diagnostics.len(),
-    "linter_len": linter_diagnostics.len(),
-    "structure_len": structure_diagnostics.len(),
-  }));
-
-  for diag in duplicate_diagnostics.iter() {
-    diagnostics.push(serde_json::to_value(diag).unwrap());
-  }
-
-  for diag in formatter_diagnostics.iter() {
-    diagnostics.push(serde_json::to_value(diag).unwrap());
-  }
-
-  for diag in linter_diagnostics.iter() {
-    diagnostics.push(serde_json::to_value(diag).unwrap());
-  }
-
-  for diag in structure_diagnostics.iter() {
-    diagnostics.push(serde_json::to_value(diag).unwrap());
-  }
-  
-  Some(serde_json::Value::Array(diagnostics).to_string())
+  diagnostics.to_string()
 }
 
 struct Contexts<'a> {
@@ -150,6 +124,6 @@ fn check_file_tree(
       data.clone(),
       root,
     );
-    // checkers.linter.check_file(ctxs.linter_ctx.clone(), &path, data, root);
+    checkers.linter.check_file(ctxs.linter_ctx.clone(), &path, data, root);
   }
 }
