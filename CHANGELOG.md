@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
+## [0.0.2] - 2020-10-21
+
+### Bug Fixes
+
+- use deno.land/x url for mordor ([`eaad6d7`])
+- use raw github url instead ([`c0cf0b0`])
+- use deno.land/x version of sauron ([`c72d076`])
+
 ## [0.0.1] - 2020-10-20
 
 ### Features
@@ -47,6 +55,10 @@ and this project adheres to [Semantic Versioning].
 
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
+[0.0.2]: https://github.com/denosaurs/sauron/compare/0.0.1...0.0.2
+[`eaad6d7`]: https://github.com/denosaurs/sauron/commit/eaad6d746a0cd3db1dc72ec3a3190ff32611def8
+[`c0cf0b0`]: https://github.com/denosaurs/sauron/commit/c0cf0b06fdfd5d431752e3f9036f6537ca1e5aff
+[`c72d076`]: https://github.com/denosaurs/sauron/commit/c72d076900b0a0f8b0997795807774a66874a178
 [0.0.1]: https://github.com/denosaurs/sauron/compare/0.0.1
 [`4410bfa`]: https://github.com/denosaurs/sauron/commit/4410bfa7772c0a0051939d31ed93fefe63ac2794
 [`b16ec7c`]: https://github.com/denosaurs/sauron/commit/b16ec7c248fee6b3527bdb7d2c86d287c9cbbc2e
