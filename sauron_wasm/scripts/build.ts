@@ -75,24 +75,32 @@ console.log(
 
 console.log("inlining wasm in js");
 const source = `import * as lz4 from "https://deno.land/x/lz4@v0.1.2/mod.ts";
-                import Context from "https://deno.land/std@0.74.0/wasi/snapshot_preview1.ts";
                 const source = lz4.decompress(Uint8Array.from(atob("${encoded}"), c => c.charCodeAt(0)));
 
-                const context = new Context({});
                 const imports = {
                   __wbindgen_placeholder__: {},
-                  wasi_snapshot_preview1: context.exports
+                  wasi_snapshot_preview1: {
+                    "random_get": () => {},
+                    "fd_read": () => {},
+                    "fd_write": () => {},
+                    "fd_close": () => {},
+                    "path_filestat_get": () => {},
+                    "path_open": () => {},
+                    "proc_exit": () => {},
+                    "environ_sizes_get": () => {},
+                    "environ_get": () => {},
+                    "environ_sizes_set": () => {},
+                    "environ_set": () => {},
+                    "clock_time_get": () => {}
+                  }
                 };
                 
-                ${
-                  (await Deno.readTextFile(`pkg/${name}.js`))
+                ${(await Deno.readTextFile(`pkg/${name}.js`))
                   .replace(/import \* as import\d from 'wasi_snapshot_preview1'/g, "")
                   .replace(/const imports = {(?:\n|.)*};/, "")
                   .replace("const file = new URL(import.meta.url).pathname;", "")
                   .replace("const wasmFile = file.substring(0, file.lastIndexOf(Deno.build.os === 'windows' ? '\\\\' : '/') + 1) + 'sauron_wasm_bg.wasm';", "")
-                  .replace("const wasmModule = new WebAssembly.Module(Deno.readFileSync(wasmFile));", "const wasmModule = new WebAssembly.Module(source);")}
-                  
-                context.memory = wasm.memory;`;
+                  .replace("const wasmModule = new WebAssembly.Module(Deno.readFileSync(wasmFile));", "const wasmModule = new WebAssembly.Module(source);")}`;
 
 console.log("minifying wasm");
 const output = await minify(source, {
