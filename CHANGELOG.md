@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
+## [0.0.3] - 2020-10-23
+
+### Features
+
+- remove deno std dependency for wasi ([`0a7f7bb`])
+
 ## [0.0.2] - 2020-10-21
 
 ### Bug Fixes
@@ -55,6 +61,8 @@ and this project adheres to [Semantic Versioning].
 
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
+[0.0.3]: https://github.com/denosaurs/sauron/compare/0.0.2...0.0.3
+[`0a7f7bb`]: https://github.com/denosaurs/sauron/commit/0a7f7bbf31bc7d7a00b357b381c23408b1fa637d
 [0.0.2]: https://github.com/denosaurs/sauron/compare/0.0.1...0.0.2
 [`eaad6d7`]: https://github.com/denosaurs/sauron/commit/eaad6d746a0cd3db1dc72ec3a3190ff32611def8
 [`c0cf0b0`]: https://github.com/denosaurs/sauron/commit/c0cf0b06fdfd5d431752e3f9036f6537ca1e5aff
